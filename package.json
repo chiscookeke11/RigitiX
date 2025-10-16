@@ -1,5 +1,8 @@
 {
   "name": "regitix",
+  "scripts": {
+    "web:dev": "bun --cwd apps/web  dev"
+  },
   "packages": [
     "packages/*",
     "apps/*"
@@ -9,7 +12,7 @@
   },
   "peerDependencies": {
     "typescript": "^5"
-  },
+  }, 
   "dependencies": {
     "@tailwindcss/vite": "^4.1.14",
     "react-router": "^7.9.4",
