@@ -1,75 +1,129 @@
-# React + TypeScript + Vite
+# Regitix Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The frontend React application for the Regitix event management platform.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Framework**: React 19 with TypeScript
+- **Build Tool**: Vite with HMR (Hot Module Replacement)
+- **Routing**: React Router DOM v7 for client-side routing
+- **UI Components**: Radix UI
+- **Styling**: Tailwind CSS + custom fonts (GeneralSans)
+- **Linting**: ESLint with React-specific rules
+- **Runtime**: Bun (instead of Node.js/npm)
 
-## React Compiler
+## Project Structure
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── components/          # Reusable UI components
+├── pages/              # Page components
+│   └── authentication/ # Auth pages (Login, Register, OTP, etc.)
+│       ├── Index.tsx
+│       ├── Layout.tsx
+│       ├── Login.tsx
+│       ├── OTPVerification.tsx
+│       ├── Register.tsx
+│       ├── ResetPassword.tsx
+│       └── UpdatePassword.tsx
+├── assets/             # Static assets (images, icons)
+├── routes.tsx          # Application routing configuration
+├── main.tsx           # Application entry point
+└── index.css          # Global styles
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- [Bun](https://bun.com) (v1.2.21 or later)
+
+### Installation
+
+1. Install dependencies:
+```bash
+bun install
 ```
+
+### Development
+
+Start the development server:
+```bash
+bun run dev
+```
+
+The application will be available at `http://localhost:5173`
+
+### Available Scripts
+
+- `bun run dev` - Start development server with HMR
+- `bun run build` - Build for production (TypeScript compilation + Vite build)
+- `bun run lint` - Run ESLint
+- `bun run preview` - Preview production build
+
+## Features
+
+### Authentication System
+- User registration with form validation
+- Login with email/password
+- OTP verification for account security
+- Password reset functionality
+- Update password feature
+- Responsive authentication layout
+
+### Routing
+The app uses React Router DOM v7 with the following routes:
+- `/` - Landing/home page
+- `/auth` - Authentication layout with nested routes:
+  - `/auth/login` - User login
+  - `/auth/register` - User registration
+  - `/auth/otp` - OTP verification
+  - `/auth/reset-password` - Password reset
+  - `/auth/update-password` - Update password
+
+Route configuration is managed in `src/routes.tsx`
+
+### Adding a New Page with Route
+
+To add a new page with a route:
+
+1. **Create the page component** in `src/pages/`:
+```tsx
+// src/pages/Events.tsx
+export function Page() {
+  return (
+    <div>
+      <h1>Events Page</h1>
+      {/* Your page content */}
+    </div>
+  );
+}
+```
+
+2. **Add the route** in `src/routes.tsx`:
+```tsx
+import { Page as EventsPage } from "./pages/Events.tsx";
+
+export const router = createBrowserRouter([
+  {
+    path: "/events",
+    Component: EventsPage
+  },
+  // ... other routes
+]);
+```
+
+3. **For nested routes** (like auth pages), add to existing route children:
+```tsx
+{
+  Component: AuthenticationLayout,
+  children: [
+    {
+      path: "login",
+      Component: LoginPage
+    }
+    // Add new auth routes here
+  ]
+}
+```
+

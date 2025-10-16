@@ -1,106 +1,100 @@
 
-Default to using Bun instead of Node.js.
+# Regitix - Event Management Platform
 
-- Use `bun <file>` instead of `node <file>` or `ts-node <file>`
-- Use `bun test` instead of `jest` or `vitest`
-- Use `bun build <file.html|file.ts|file.css>` instead of `webpack` or `esbuild`
-- Use `bun install` instead of `npm install` or `yarn install` or `pnpm install`
-- Use `bun run <script>` instead of `npm run <script>` or `yarn run <script>` or `pnpm run <script>`
-- Bun automatically loads .env, so don't use dotenv.
+Regitix is a monorepo event management platform built with Bun and modern web technologies.
 
-## APIs
+## Project Structure
 
-- `Bun.serve()` supports WebSockets, HTTPS, and routes. Don't use `express`.
-- `bun:sqlite` for SQLite. Don't use `better-sqlite3`.
-- `Bun.redis` for Redis. Don't use `ioredis`.
-- `Bun.sql` for Postgres. Don't use `pg` or `postgres.js`.
-- `WebSocket` is built-in. Don't use `ws`.
-- Prefer `Bun.file` over `node:fs`'s readFile/writeFile
-- Bun.$`ls` instead of execa.
-
-## Testing
-
-Use `bun test` to run tests.
-
-```ts#index.test.ts
-import { test, expect } from "bun:test";
-
-test("hello world", () => {
-  expect(1).toBe(1);
-});
+```
+regitix/
+├── apps/
+│   └── web/                 # Frontend React application
+│       ├── src/
+│       │   ├── components/  # Reusable UI components
+│       │   ├── pages/       # Page components
+│       │   │   └── authentication/  # Auth pages (Login, Register, etc.)
+│       │   ├── assets/      # Static assets
+│       │   └── routes.tsx   # Application routing
+│       ├── public/          # Public static files
+│       │   ├── fonts/       # Custom fonts
+│       │   └── images/      # Image assets
+│       └── package.json     # Web app dependencies
+└── packages/
+    └── db/                  # Database layer (future)
 ```
 
-## Frontend
+## Development
 
-Use HTML imports with `Bun.serve()`. Don't use `vite`. HTML imports fully support React, CSS, Tailwind.
+### Web App (Frontend)
 
-Server:
+The web application is located in `apps/web/` and uses:
+- React 19 with TypeScript
+- Vite for development and building
+- React Router DOM v7 for client-side routing
+- Radix UI for components
+- Tailwind CSS for styling
 
-```ts#index.ts
-import index from "./index.html"
-
-Bun.serve({
-  routes: {
-    "/": index,
-    "/api/users/:id": {
-      GET: (req) => {
-        return new Response(JSON.stringify({ id: req.params.id }));
-      },
-    },
-  },
-  // optional websocket support
-  websocket: {
-    open: (ws) => {
-      ws.send("Hello, world!");
-    },
-    message: (ws, message) => {
-      ws.send(message);
-    },
-    close: (ws) => {
-      // handle close
-    }
-  },
-  development: {
-    hmr: true,
-    console: true,
-  }
-})
+To start development:
+```bash
+cd apps/web
+bun install
+bun run dev
 ```
 
-HTML files can import .tsx, .jsx or .js files directly and Bun's bundler will transpile & bundle automatically. `<link>` tags can point to stylesheets and Bun's CSS bundler will bundle.
+### Commands for Web App
 
-```html#index.html
-<html>
-  <body>
-    <h1>Hello, world!</h1>
-    <script type="module" src="./frontend.tsx"></script>
-  </body>
-</html>
-```
+- `bun run dev` - Start development server
+- `bun run build` - Build for production
+- `bun run lint` - Run ESLint
+- `bun run preview` - Preview production build
 
-With the following `frontend.tsx`:
+### Git Workflow
 
-```tsx#frontend.tsx
-import React from "react";
+Follow the project's git workflow:
+- Create feature branches from `master`
+- Use conventional commit messages (feat:, fix:, chore:, etc.)
+- Submit Pull Requests for all changes
+- All changes must be reviewed before merging to `master`
 
-// import .css files directly and it works
-import './index.css';
+### Code Style
 
-import { createRoot } from "react-dom/client";
+- Use TypeScript for all new code
+- Follow React functional component patterns
+- Use Tailwind CSS for styling
+- Follow existing file structure conventions
+- Export page components as `Page` function
 
-const root = createRoot(document.body);
+## Project-Specific Guidelines
 
-export default function Frontend() {
-  return <h1>Hello, world!</h1>;
+### File Structure
+- Place new pages in `apps/web/src/pages/`
+- Place reusable components in `apps/web/src/components/`
+- Add routes in `apps/web/src/routes.tsx`
+- Use the authentication layout for auth-related pages
+
+### Component Patterns
+```tsx
+// Page component example
+export function Page() {
+  return (
+    <div>
+      <h1>Page Title</h1>
+      {/* Page content */}
+    </div>
+  );
 }
-
-root.render(<Frontend />);
 ```
 
-Then, run index.ts
+### Routing
+- Use React Router DOM v7 syntax
+- Follow the existing pattern in `routes.tsx`
+- Nested routes should use the appropriate layout component
 
-```sh
-bun --hot ./index.ts
-```
+### Styling
+- Use Tailwind CSS classes for styling
+- Custom fonts (GeneralSans) are available in `public/fonts/`
+- Follow responsive design principles
 
-For more information, read the Bun API docs in `node_modules/bun-types/docs/**.md`.
+### Testing
+- Use `bun test` for running tests
+- Follow Bun's testing patterns with `import { test, expect } from "bun:test"`
