@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "../components/Sidebar";
 import { 
-  Notification01Icon, 
+  Notification03Icon, 
   ArrowDown01Icon
 } from "hugeicons-react";
 
@@ -18,29 +18,25 @@ export function DashboardLayout({ activeItem = "dashboard" }: DashboardLayoutPro
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col">
         {/* Top Header */}
-        <header className="bg-white border-b border-gray-200 px-6 py-4">
+        <header className="header-bg px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-semibold text-gray-900">Events</h1>
+              <h1 className="header-title">Events</h1>
             </div>
             
             <div className="flex items-center gap-4">
               {/* Notifications */}
-              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <Notification01Icon size={20} color="#6B7280" />
+              <button className="notification-container hover:bg-gray-50 transition-colors">
+                <Notification03Icon size={20} color="#6B7280" />
+                <div className="notification-dot"></div>
               </button>
               
               {/* User Profile Dropdown */}
-              <div className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors">
-                <div className="flex -space-x-1">
-                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                    <span className="text-xs font-medium text-white">O</span>
-                  </div>
-                  <div className="w-8 h-8 bg-white border-2 border-gray-200 rounded-full flex items-center justify-center">
-                    <span className="text-xs font-medium text-gray-600">O</span>
-                  </div>
+              <div className="profile-container hover:bg-gray-50 cursor-pointer transition-colors">
+                <div className="profile-initials-container">
+                  OO
                 </div>
-                <ArrowDown01Icon size={16} color="#6B7280" />
+                <ArrowDown01Icon size={20} color="#525252" />
               </div>
             </div>
           </div>

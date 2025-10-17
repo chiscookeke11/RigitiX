@@ -2,11 +2,13 @@ import { useState } from "react";
 import { 
   EyeIcon, 
   Upload01Icon,
-  Delete01Icon,
   InformationCircleIcon,
   Calendar01Icon,
-  Location01Icon
+  Location01Icon,
+  FloppyDiskIcon,
+  ArrowRight01Icon
 } from "hugeicons-react";
+import { EventButton } from "../../components/EventButton";
 
 export function EventCreate() {
   const [formData, setFormData] = useState({
@@ -18,6 +20,7 @@ export function EventCreate() {
   });
 
   const [newTag, setNewTag] = useState("");
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const handleInputChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData(prev => ({ ...prev, [field]: (e.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement).value }));
@@ -47,247 +50,338 @@ export function EventCreate() {
     }
   };
 
-  return (
-    <div className="p-6 max-w-7xl mx-auto">
-      {/* Page Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Create New Event</h1>
-        <p className="text-gray-600">Set up your event with all the details and media</p>
-      </div>
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
-      {/* Action Buttons */}
-      <div className="flex justify-end gap-3 mb-8">
-        <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
-          <EyeIcon size={16} />
-          Preview Event
-        </button>
-        <button className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors">
-          Save to Draft
-        </button>
+  const removeImage = () => {
+    setImagePreview(null);
+  };
+
+  return (
+    <div className="p-6 w-full max-w-6xl mx-auto">
+      {/* Page Header and Action Buttons */}
+      <div className="event-header-container mb-8">
+        <div>
+          <h1 className="event-title">Create New Event</h1>
+          <p className="event-subtitle">Set up your event with all the details and media</p>
+        </div>
+        <div className="flex gap-3">
+          <EventButton icon={EyeIcon}>
+            Preview Event
+          </EventButton>
+          <EventButton icon={FloppyDiskIcon} variant="primary">
+            Save to Draft
+          </EventButton>
+        </div>
       </div>
 
       {/* Progress Stepper */}
-      <div className="flex items-center gap-4 mb-8">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-medium">
-            1
-          </div>
-          <span className="text-orange-500 font-medium">Basic Info</span>
+      <div className="event-stepper-container mb-8">
+        <div className="event-stepper-item">
+          <div className="event-stepper-number event-stepper-number-active">1</div>
+          <span className="event-stepper-text event-stepper-text-active">Basic Info</span>
         </div>
-        <div className="w-8 h-px bg-gray-300"></div>
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center text-sm font-medium">
-            2
-          </div>
-          <span className="text-gray-500">Ticketing</span>
+        <div className="event-stepper-arrow">
+          <ArrowRight01Icon size={20} color="#737373" />
         </div>
-        <div className="w-8 h-px bg-gray-300"></div>
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center text-sm font-medium">
-            3
-          </div>
-          <span className="text-gray-500">Media</span>
+        <div className="event-stepper-item">
+          <div className="event-stepper-number event-stepper-number-inactive">2</div>
+          <span className="event-stepper-text event-stepper-text-inactive">Ticketing</span>
         </div>
-        <div className="w-8 h-px bg-gray-300"></div>
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center text-sm font-medium">
-            4
-          </div>
-          <span className="text-gray-500">Event Configuration</span>
+        <div className="event-stepper-arrow">
+          <ArrowRight01Icon size={20} color="#737373" />
         </div>
-        <div className="w-8 h-px bg-gray-300"></div>
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center text-sm font-medium">
-            5
-          </div>
-          <span className="text-gray-500">Review & Publish</span>
+        <div className="event-stepper-item">
+          <div className="event-stepper-number event-stepper-number-inactive">3</div>
+          <span className="event-stepper-text event-stepper-text-inactive">Media</span>
+        </div>
+        <div className="event-stepper-arrow">
+          <ArrowRight01Icon size={20} color="#737373" />
+        </div>
+        <div className="event-stepper-item">
+          <div className="event-stepper-number event-stepper-number-inactive">4</div>
+          <span className="event-stepper-text event-stepper-text-inactive">Event Configuration</span>
+        </div>
+        <div className="event-stepper-arrow">
+          <ArrowRight01Icon size={20} color="#737373" />
+        </div>
+        <div className="event-stepper-item">
+          <div className="event-stepper-number event-stepper-number-inactive">5</div>
+          <span className="event-stepper-text event-stepper-text-inactive">Review & Publish</span>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="flex flex-col xl:flex-row gap-8 w-full">
         {/* Cover Photo Section */}
-        <div className="lg:col-span-1">
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Cover Photo</h3>
-            
-            {/* Cover Photo Placeholder */}
-            <div className="relative mb-4">
-              <div className="w-full h-64 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center relative overflow-hidden">
-                <div className="text-center text-white">
-                  <div className="text-2xl font-bold mb-2">PHPConnect 2025</div>
-                  <div className="text-lg">THE BUILDER'S EDITION</div>
-                </div>
-                <button className="absolute bottom-3 right-3 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
-                  <Delete01Icon size={16} />
+        <div className="event-cover-container">
+          <label className="event-form-label">Cover Photo</label>
+          <div className="event-cover-placeholder relative">
+            {imagePreview ? (
+              <>
+                <img 
+                  src={imagePreview} 
+                  alt="Cover preview" 
+                  className="w-full h-full object-cover rounded-3xl"
+                />
+                <button 
+                  onClick={removeImage}
+                  className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                >
+                  ×
                 </button>
-              </div>
-            </div>
-            
-            <button className="w-full flex items-center justify-center gap-2 py-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-gray-400 hover:text-gray-700 transition-colors">
-              <Upload01Icon size={20} />
-              Upload Cover Photo
-            </button>
+              </>
+            ) : (
+              <span>No image uploaded</span>
+            )}
           </div>
+          <label className="event-upload-button cursor-pointer">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="hidden"
+            />
+            <div className="event-button-icon">
+              <Upload01Icon size={20} />
+            </div>
+            {imagePreview ? "Change Cover Photo" : "Upload Cover Photo"}
+          </label>
         </div>
 
         {/* Event Details Form */}
-        <div className="lg:col-span-2">
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Event Details</h3>
-              <p className="text-gray-600">Basic information about your event</p>
+        <div className="event-form-container">
+          <div className="mb-4">
+            <h2 className="event-form-label">Event Details</h2>
+            <p className="event-form-sublabel">Basic information about your event</p>
+          </div>
+
+          <div className="space-y-4">
+            {/* Event Name */}
+            <div>
+              <label className="event-form-label mb-2">
+                Event Name *
+                <span className="text-gray-500 font-normal ml-2">(Optional)</span>
+              </label>
+              <input
+                type="text"
+                value={formData.eventName}
+                onChange={handleInputChange('eventName')}
+                className="event-form-input"
+                placeholder="e.g John Doe"
+              />
             </div>
 
-            <div className="space-y-6">
-              {/* Event Name */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Event Name
-                </label>
-                <input
-                  type="text"
-                  value={formData.eventName}
-                  onChange={handleInputChange('eventName')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="e.g John Doe"
-                />
+            {/* Event Description */}
+            <div>
+              <label className="event-form-label mb-2">
+                Event Description *
+                <span className="text-gray-500 font-normal ml-2">(Optional)</span>
+              </label>
+              <textarea
+                value={formData.eventDescription}
+                onChange={handleInputChange('eventDescription')}
+                rows={4}
+                className="event-form-textarea"
+                placeholder="Describe your event in details"
+              />
+              <div className="flex items-center justify-between mt-2">
+                <button className="flex items-center gap-2 text-sm text-purple-600 hover:text-purple-700">
+                  ✨ Suggest Description
+                </button>
+                <span className="event-form-sublabel">0/200</span>
               </div>
+            </div>
 
-              {/* Event Description */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Event Description
-                </label>
-                <textarea
-                  value={formData.eventDescription}
-                  onChange={handleInputChange('eventDescription')}
-                  rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
-                  placeholder="Describe your event in details"
-                />
-                <div className="flex items-center justify-between mt-2">
-                  <button className="flex items-center gap-2 text-sm text-purple-600 hover:text-purple-700">
-                    ✨ Suggest Description
-                  </button>
-                  <span className="text-sm text-gray-500">132 / 140</span>
-                </div>
-              </div>
+            {/* Event Category */}
+            <div>
+              <label className="event-form-label mb-2">
+                Event Category *
+                <span className="text-gray-500 font-normal ml-2">(Optional)</span>
+              </label>
+              <select
+                value={formData.eventCategory}
+                onChange={handleInputChange('eventCategory')}
+                className="event-form-input"
+              >
+                <option value="">Select Category</option>
+                <option value="Conference">Conference</option>
+                <option value="Workshop">Workshop</option>
+                <option value="Meetup">Meetup</option>
+                <option value="Hackathon">Hackathon</option>
+                <option value="Seminar">Seminar</option>
+                <option value="Webinar">Webinar</option>
+              </select>
+            </div>
 
-              {/* Event Category */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Event Category
-                </label>
-                <select
-                  value={formData.eventCategory}
-                  onChange={handleInputChange('eventCategory')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                >
-                  <option value="Conference">Conference</option>
-                  <option value="Workshop">Workshop</option>
-                  <option value="Meetup">Meetup</option>
-                  <option value="Hackathon">Hackathon</option>
-                  <option value="Seminar">Seminar</option>
-                  <option value="Webinar">Webinar</option>
-                </select>
-              </div>
-
-              {/* Tags */}
-              <div>
-                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
-                  Tags
-                  <InformationCircleIcon size={16} color="#A3A3A3" />
-                </label>
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {formData.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="inline-flex items-center gap-2 px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+            {/* Tags */}
+            <div>
+              <label className="flex items-center gap-2 event-form-label mb-2">
+                Tags *
+                <span className="text-gray-500 font-normal ml-2">(Optional)</span>
+                <InformationCircleIcon size={16} color="#A3A3A3" />
+              </label>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {formData.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="inline-flex items-center gap-2 px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+                  >
+                    {tag}
+                    <button
+                      onClick={() => removeTag(tag)}
+                      className="text-gray-400 hover:text-gray-600"
                     >
-                      {tag}
-                      <button
-                        onClick={() => removeTag(tag)}
-                        className="text-gray-400 hover:text-gray-600"
-                      >
-                        ×
-                      </button>
-                    </span>
-                  ))}
-                </div>
-                <input
-                  type="text"
-                  value={newTag}
-                  onChange={(e) => setNewTag((e.target as HTMLInputElement).value)}
-                  onKeyPress={handleKeyPress}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="e.g Tech"
-                />
+                      ×
+                    </button>
+                  </span>
+                ))}
               </div>
+              <input
+                type="text"
+                value={newTag}
+                onChange={(e) => setNewTag((e.target as HTMLInputElement).value)}
+                onKeyPress={handleKeyPress}
+                className="event-form-input"
+                placeholder="e.g Tech"
+              />
+            </div>
 
-              {/* Event Type */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-4">
-                  Select Type of Event
-                </label>
-                <p className="text-sm text-gray-600 mb-4">Choose between One-Time or Recurring Event</p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* One-Time Event */}
-                  <div
-                    className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                      formData.eventType === 'one-time'
-                        ? 'border-green-500 bg-green-50'
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                    onClick={() => setFormData(prev => ({ ...prev, eventType: 'one-time' }))}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-4 h-4 rounded-full border-2 ${
-                        formData.eventType === 'one-time'
-                          ? 'border-green-500 bg-green-500'
-                          : 'border-gray-300'
-                      }`}>
-                        {formData.eventType === 'one-time' && (
-                          <div className="w-2 h-2 bg-white rounded-full mx-auto mt-0.5"></div>
-                        )}
-                      </div>
-                      <Calendar01Icon size={20} color={formData.eventType === 'one-time' ? '#10B981' : '#6B7280'} />
-                      <div>
-                        <h4 className="font-medium text-gray-900">One-Time Event</h4>
-                        <p className="text-sm text-gray-600">For single occurrence events</p>
-                      </div>
-                    </div>
+            {/* Event Type */}
+            <div>
+              <label className="event-form-label mb-2">
+                Select Type of Event
+              </label>
+              <p className="event-form-sublabel mb-3">Choose between One-Time or Recurring Event</p>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                {/* One-Time Event */}
+                <div
+                  className={`event-selection-box ${formData.eventType === 'one-time' ? 'border-2 border-orange-500' : ''}`}
+                  onClick={() => setFormData(prev => ({ ...prev, eventType: 'one-time' }))}
+                >
+                  <div className={`event-selection-radio ${formData.eventType === 'one-time' ? 'selected' : ''}`}>
+                    {formData.eventType === 'one-time' && <div className="event-selection-radio-dot"></div>}
                   </div>
+                  <div className="event-selection-icon">
+                    <Calendar01Icon size={20} color="#FFFFFF" />
+                  </div>
+                  <h3 className="event-selection-title">One-Time Event</h3>
+                  <p className="event-selection-subtitle">For events that happen once</p>
+                </div>
 
-                  {/* Recurring Event */}
-                  <div
-                    className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                      formData.eventType === 'recurring'
-                        ? 'border-green-500 bg-green-50'
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                    onClick={() => setFormData(prev => ({ ...prev, eventType: 'recurring' }))}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-4 h-4 rounded-full border-2 ${
-                        formData.eventType === 'recurring'
-                          ? 'border-green-500 bg-green-500'
-                          : 'border-gray-300'
-                      }`}>
-                        {formData.eventType === 'recurring' && (
-                          <div className="w-2 h-2 bg-white rounded-full mx-auto mt-0.5"></div>
-                        )}
-                      </div>
-                      <Location01Icon size={20} color={formData.eventType === 'recurring' ? '#10B981' : '#6B7280'} />
-                      <div>
-                        <h4 className="font-medium text-gray-900">Recurring Event</h4>
-                        <p className="text-sm text-gray-600">For timed entry and multiple days</p>
-                      </div>
-                    </div>
+                {/* Recurring Event */}
+                <div
+                  className={`event-selection-box ${formData.eventType === 'recurring' ? 'border-2 border-orange-500' : ''}`}
+                  onClick={() => setFormData(prev => ({ ...prev, eventType: 'recurring' }))}
+                >
+                  <div className={`event-selection-radio ${formData.eventType === 'recurring' ? 'selected' : ''}`}>
+                    {formData.eventType === 'recurring' && <div className="event-selection-radio-dot"></div>}
                   </div>
+                  <div className="event-selection-icon">
+                    <Location01Icon size={20} color="#FFFFFF" />
+                  </div>
+                  <h3 className="event-selection-title">Recurring Event</h3>
+                  <p className="event-selection-subtitle">For timed entry and multiple days</p>
                 </div>
               </div>
+            </div>
+
+            {/* Select Video Platform */}
+            <div>
+              <label className="event-form-label mb-2">
+                Select Video Platform *
+                <span className="text-gray-500 font-normal ml-2">(Optional)</span>
+              </label>
+              <select className="event-form-input">
+                <option value="">Select Platform</option>
+                <option value="youtube">YouTube</option>
+                <option value="vimeo">Vimeo</option>
+                <option value="zoom">Zoom</option>
+                <option value="teams">Microsoft Teams</option>
+              </select>
+            </div>
+
+            {/* Event Location */}
+            <div>
+              <label className="event-form-label mb-2">
+                Event Location
+              </label>
+              <p className="event-form-sublabel mb-3">Choose between physical or virtual event</p>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                {/* Physical Event */}
+                <div className="event-selection-box">
+                  <div className="event-selection-radio">
+                  </div>
+                  <div className="event-selection-icon">
+                    <Calendar01Icon size={20} color="#FFFFFF" />
+                  </div>
+                  <h3 className="event-selection-title">Physical Event</h3>
+                  <p className="event-selection-subtitle">For events that happen once</p>
+                </div>
+
+                {/* Virtual Event */}
+                <div className="event-selection-box">
+                  <div className="event-selection-radio">
+                  </div>
+                  <div className="event-selection-icon">
+                    <Location01Icon size={20} color="#FFFFFF" />
+                  </div>
+                  <h3 className="event-selection-title">Virtual Event</h3>
+                  <p className="event-selection-subtitle">For timed entry and multiple days</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Venue Name */}
+            <div>
+              <label className="event-form-label mb-2">
+                Venue Name *
+                <span className="text-gray-500 font-normal ml-2">(Optional)</span>
+              </label>
+              <input
+                type="text"
+                className="event-form-input"
+                placeholder="search location"
+              />
+              <button className="mt-2 text-sm text-blue-600 hover:text-blue-700">
+                Use Map
+              </button>
+            </div>
+
+            {/* Organizer's Note */}
+            <div>
+              <label className="event-form-label mb-2">
+                Organizer's Note (Optional) *
+                <span className="text-gray-500 font-normal ml-2">(Optional)</span>
+              </label>
+              <textarea
+                rows={4}
+                className="event-form-textarea"
+                placeholder="Describe your event in details"
+              />
+              <div className="flex items-center justify-between mt-2">
+                <span className="event-form-sublabel">0/200</span>
+              </div>
+            </div>
+
+            {/* Navigation Buttons */}
+            <div className="flex justify-between pt-6">
+              <EventButton variant="outline">
+                Previous
+              </EventButton>
+              <EventButton variant="primary" className="!bg-orange-500 hover:!bg-orange-600">
+                Next: Ticketing
+              </EventButton>
             </div>
           </div>
         </div>

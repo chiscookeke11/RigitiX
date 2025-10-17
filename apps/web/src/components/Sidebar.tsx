@@ -41,18 +41,18 @@ export function Sidebar({ activeItem = "dashboard" }: SidebarProps) {
         </div>
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-sm font-medium text-gray-900 leading-5 tracking-tight">
+            <h3 className="text-sm font-medium text-white leading-5 tracking-tight">
               Owai Owai
             </h3>
             <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
               <div className="w-2 h-2 bg-white rounded-full"></div>
             </div>
           </div>
-          <p className="text-xs text-gray-400 leading-4">
+          <p className="text-xs text-gray-300 leading-4">
             owai@rigitix.com
           </p>
         </div>
-        <div className="w-6 h-6 rounded-md flex items-center justify-center hover:bg-gray-100 cursor-pointer">
+        <div className="w-6 h-6 rounded-md flex items-center justify-center hover:bg-gray-700 cursor-pointer">
           <ArrowRight01Icon size={16} color="#A3A3A3" />
         </div>
       </div>
@@ -73,13 +73,13 @@ export function Sidebar({ activeItem = "dashboard" }: SidebarProps) {
                   to={`/dashboard/${item.id}`}
                   className={`nav-link flex items-center ${
                     isActive 
-                      ? 'active text-gray-900' 
-                      : 'text-gray-400 hover:text-gray-600'
+                      ? 'active text-white' 
+                      : 'text-gray-300 hover:text-white'
                   }`}
                 >
                   <Icon 
                     size={20} 
-                    color={isActive ? "#000000" : "#A3A3A3"} 
+                    color={isActive ? "#FFFFFF" : "#A3A3A3"} 
                     className="mr-2"
                   />
                   <span className="text-sm font-medium leading-5 tracking-tight">
@@ -108,13 +108,13 @@ export function Sidebar({ activeItem = "dashboard" }: SidebarProps) {
                   to={`/dashboard/${item.id}`}
                   className={`nav-link flex items-center ${
                     isActive 
-                      ? 'active text-gray-900' 
-                      : 'text-gray-400 hover:text-gray-600'
+                      ? 'active text-white' 
+                      : 'text-gray-300 hover:text-white'
                   }`}
                 >
                   <Icon 
                     size={20} 
-                    color={isActive ? "#000000" : "#A3A3A3"} 
+                    color={isActive ? "#FFFFFF" : "#A3A3A3"} 
                     className="mr-2"
                   />
                   <span className="text-sm font-medium leading-5 tracking-tight">
