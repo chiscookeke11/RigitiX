@@ -16,7 +16,7 @@ export function DashboardLayout({ activeItem = "dashboard" }: DashboardLayoutPro
       <Sidebar activeItem={activeItem} />
       
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col ml-4">
         {/* Top Header */}
         <header className="header-bg px-6 py-4">
           <div className="flex items-center justify-between">

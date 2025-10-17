@@ -47,10 +47,12 @@ body {
   height: 100vh;
   background: var(--sidebar-dark-bg);
   border-right: 1px solid var(--Gray-Light-100);
+  padding: 24px 16px 24px 24px;
 }
 
 .profile-section {
-  width: 248px;
+  width: 100%;
+  max-width: 248px;
   height: 64px;
   border-radius: 10px;
   gap: 12px;
@@ -77,7 +79,9 @@ body {
   gap: 8px;
   padding: 8px 12px;
   border-radius: 24px;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .nav-link.active {
@@ -85,7 +89,16 @@ body {
 }
 
 .nav-link:hover:not(.active) {
-  background: rgba(238, 233, 241, 0.1);
+  background: rgba(238, 233, 241, 0.15);
+  transform: translateX(2px);
+}
+
+.nav-link:hover:not(.active) .nav-link-icon {
+  transform: scale(1.1);
+}
+
+.nav-link:hover:not(.active) .nav-link-text {
+  color: #FFFFFF;
 }
 
 .active-indicator {
@@ -94,6 +107,19 @@ body {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   background: var(--state-feature-lighter);
+  position: absolute;
+  left: -20px;
+  top: 50%;
+}
+
+.nav-link-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link-text {
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Header styles */

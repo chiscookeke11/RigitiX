@@ -77,7 +77,7 @@ export function EventCreate() {
           <EventButton icon={EyeIcon}>
             Preview Event
           </EventButton>
-          <EventButton icon={FloppyDiskIcon} variant="primary">
+          <EventButton icon={FloppyDiskIcon}>
             Save to Draft
           </EventButton>
         </div>

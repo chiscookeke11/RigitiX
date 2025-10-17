@@ -1,14 +1,14 @@
 import { NavLink } from "react-router-dom";
-import { 
-  DashboardSpeed01Icon, 
-  Calendar01Icon, 
-  ChartIcon, 
-  Coins01Icon, 
-  Megaphone01Icon, 
-  File01Icon, 
-  GridIcon,
-  Settings01Icon,
-  HeadphonesIcon,
+import {
+  DashboardSquare01Icon,
+  Calendar02Icon,
+  SignalFull02Icon,
+  Coins01Icon,
+  Megaphone02Icon,
+  File02Icon,
+  LayoutGridIcon,
+  Configuration02Icon,
+  CustomerSupportIcon,
   ArrowRight01Icon
 } from "hugeicons-react";
 
@@ -18,22 +18,22 @@ interface SidebarProps {
 
 export function Sidebar({ activeItem = "dashboard" }: SidebarProps) {
   const navigationItems = [
-    { id: "dashboard", label: "Dashboard", icon: DashboardSpeed01Icon },
-    { id: "events", label: "Events", icon: Calendar01Icon },
-    { id: "sales", label: "Sales & Analytics", icon: ChartIcon },
+    { id: "dashboard", label: "Dashboard", icon: DashboardSquare01Icon },
+    { id: "events", label: "Events", icon: Calendar02Icon },
+    { id: "sales", label: "Sales & Analytics", icon: SignalFull02Icon },
     { id: "financials", label: "Financials & Payouts", icon: Coins01Icon },
-    { id: "affiliate", label: "Affiliate / Referral", icon: Megaphone01Icon },
-    { id: "reports", label: "Reports & Publicity Tools", icon: File01Icon },
-    { id: "launchpad", label: "Launch Pad", icon: GridIcon },
+    { id: "affiliate", label: "Affiliate / Referral", icon: Megaphone02Icon },
+    { id: "reports", label: "Reports & Publicity Tools", icon: File02Icon },
+    { id: "launchpad", label: "Launch Pad", icon: LayoutGridIcon },
   ];
 
   const utilityItems = [
-    { id: "settings", label: "Settings & Security", icon: Settings01Icon },
-    { id: "support", label: "Support & Extensions", icon: HeadphonesIcon },
+    { id: "settings", label: "Settings & Security", icon: Configuration02Icon },
+    { id: "support", label: "Support & Extensions", icon: CustomerSupportIcon },
   ];
 
   return (
-    <div className="dashboard-sidebar flex flex-col p-6">
+    <div className="dashboard-sidebar flex flex-col">
       {/* Profile Section */}
       <div className="profile-section flex items-center mb-8">
         <div className="profile-initials flex items-center justify-center mr-3">
@@ -80,9 +80,9 @@ export function Sidebar({ activeItem = "dashboard" }: SidebarProps) {
                   <Icon 
                     size={20} 
                     color={isActive ? "#FFFFFF" : "#A3A3A3"} 
-                    className="mr-2"
+                    className="nav-link-icon mr-2"
                   />
-                  <span className="text-sm font-medium leading-5 tracking-tight">
+                  <span className="nav-link-text text-sm font-medium leading-5 tracking-tight">
                     {item.label}
                   </span>
                 </NavLink>
@@ -115,9 +115,9 @@ export function Sidebar({ activeItem = "dashboard" }: SidebarProps) {
                   <Icon 
                     size={20} 
                     color={isActive ? "#FFFFFF" : "#A3A3A3"} 
-                    className="mr-2"
+                    className="nav-link-icon mr-2"
                   />
-                  <span className="text-sm font-medium leading-5 tracking-tight">
+                  <span className="nav-link-text text-sm font-medium leading-5 tracking-tight">
                     {item.label}
                   </span>
                 </NavLink>
