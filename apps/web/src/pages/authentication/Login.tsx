@@ -6,6 +6,7 @@ import { Checkbox } from "../../components/Checkbox";
 import { SocialAuthButtons } from "../../components/SocialAuthButtons";
 import { EmailIcon } from "../../assets/icons/Email";
 import { LockIcon } from "../../assets/icons/Lock";
+import { NavLink } from "react-router";
 
 export function Page() {
   const [formData, setFormData] = useState({
@@ -37,9 +38,9 @@ export function Page() {
         {/* Header */}
         <div className="flex justify-end mb-8">
           <div className="text-gray-600 text-[13px]">
-            <a href="/auth/register" className="text-orange-500 font-medium hover:text-orange-600">
+            <NavLink to="/auth/register" className="text-orange-500 font-medium hover:text-orange-600">
               Sign Up
-            </a>
+            </NavLink>
           </div>
         </div>
 
@@ -105,12 +106,12 @@ export function Page() {
                 onChange={(checked) => setFormData(prev => ({ ...prev, rememberMe: checked }))}
                 label="Remember me"
               />
-              <a
-                href="/auth/forgot-password"
+              <NavLink
+                to="/auth/forgot-password"
                 className="text-sm text-gray-600 hover:text-gray-800"
               >
                 Forgot Password ?
-              </a>
+              </NavLink>
             </div>
           </form>
 

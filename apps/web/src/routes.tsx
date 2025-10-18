@@ -3,6 +3,8 @@ import { Layout as AuthenticationLayout } from "./pages/authentication/Layout.ts
 import { Page as AuthIndexPage } from "./pages/authentication/Index.tsx";
 import { Page as RegisterPage } from "./pages/authentication/Register.tsx";
 import { Page as LoginPage } from "./pages/authentication/Login.tsx";
+import { Page as OTPVerificationPage } from "./pages/authentication/OTPVerification.tsx";
+
 export const router = createBrowserRouter([
   {
     path: "/auth",
@@ -20,6 +22,10 @@ export const router = createBrowserRouter([
         {
           path: "login",
           Component: LoginPage
+        },
+        {
+          path: "otp-verification",
+          Component: OTPVerificationPage
         }
       ]
     }

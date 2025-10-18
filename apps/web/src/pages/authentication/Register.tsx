@@ -6,6 +6,7 @@ import { SocialAuthButtons } from "../../components/SocialAuthButtons";
 import { Person } from "../../assets/icons/Person";
 import { EmailIcon } from "../../assets/icons/Email";
 import { LockIcon } from "../../assets/icons/Lock";
+import { NavLink } from "react-router"
 
 export function Page() {
   const [formData, setFormData] = useState({
@@ -51,9 +52,9 @@ export function Page() {
         <div className="text-gray-600 text-[13px]">
           <span className="inline-block mr-[10px] text-[#737373]">Already have an account?
           </span>
-          <a href="/auth/login" className="text-orange-500 font-medium hover:text-orange-600">
+          <NavLink to="/auth/login" className="text-orange-500 font-medium hover:text-orange-600 cursor-pointer">
             Sign In
-          </a>
+          </NavLink>
         </div>
       </div>
 
