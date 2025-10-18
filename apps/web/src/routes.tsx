@@ -4,6 +4,9 @@ import { Page as AuthIndexPage } from "./pages/authentication/Index.tsx";
 import { Page as RegisterPage } from "./pages/authentication/Register.tsx";
 import { Page as LoginPage } from "./pages/authentication/Login.tsx";
 import { Page as OTPVerificationPage } from "./pages/authentication/OTPVerification.tsx";
+import { Page as InterestsPage } from "./pages/authentication/Interests.tsx";
+import { Page as ForgotPasswordPage } from "./pages/authentication/ForgotPassword.tsx";
+import { Page as UpdatePasswordPage } from "./pages/authentication/UpdatePassword.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -11,6 +14,10 @@ export const router = createBrowserRouter([
     children: [{
       index: true,
       Component: AuthIndexPage
+    },
+    {
+      path: "interests",
+      Component: InterestsPage
     },
     {
       Component: AuthenticationLayout,
@@ -26,6 +33,14 @@ export const router = createBrowserRouter([
         {
           path: "otp-verification",
           Component: OTPVerificationPage
+        },
+        {
+          path: "forgot-password",
+          Component: ForgotPasswordPage
+        },
+        {
+          path: "update-password",
+          Component: UpdatePasswordPage
         }
       ]
     }
