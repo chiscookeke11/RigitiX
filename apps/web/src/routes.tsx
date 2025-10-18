@@ -7,6 +7,9 @@ import { Page as OTPVerificationPage } from "./pages/authentication/OTPVerificat
 import { Page as InterestsPage } from "./pages/authentication/Interests.tsx";
 import { Page as ForgotPasswordPage } from "./pages/authentication/ForgotPassword.tsx";
 import { Page as UpdatePasswordPage } from "./pages/authentication/UpdatePassword.tsx";
+import { DashboardLayout } from "./layouts/DashboardLayout.tsx";
+import { Dashboard } from "./pages/dashboard/Dashboard.tsx";
+import { EventCreate } from "./pages/dashboard/EventCreate.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +48,29 @@ export const router = createBrowserRouter([
       ]
     }
     ],
+  },
+  {
+    path: "/dashboard",
+    Component: DashboardLayout,
+    children: [
+      {
+        index: true,
+        Component: Dashboard
+      },
+      {
+        path: "events",
+        children: [
+          {
+            path: "create",
+            Component: EventCreate
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: "/",
+    element: <div>Redirecting to dashboard...</div>
   },
   {
     path: "/*",

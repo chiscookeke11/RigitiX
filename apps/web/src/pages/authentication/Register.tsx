@@ -23,7 +23,7 @@ export function Page() {
   const [passwordStrength, setPasswordStrength] = useState('');
 
   const handleInputChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = (e.target as HTMLInputElement).value;
     setFormData(prev => ({ ...prev, [field]: value }));
 
     if (field === 'password') {

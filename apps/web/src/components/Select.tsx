@@ -13,7 +13,7 @@ export function Select({ placeholder, value, onValueChange, children, className 
     <div className="relative">
       <select
         value={value}
-        onChange={(e) => onValueChange?.(e.target.value)}
+        onChange={(e) => onValueChange?.((e.target as HTMLSelectElement).value)}
         className={`text-[14px] w-full px-3 py-[8px] pr-10 bg-gray-50 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 appearance-none ${className}`}
       >
         {placeholder && (
