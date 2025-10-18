@@ -3,10 +3,7 @@
   "scripts": {
     "web:dev": "bun --cwd apps/web  dev"
   },
-  "packages": [
-    "packages/*",
-    "apps/*"
-  ],
+  "workspaces": ["packages/*", "apps/*"], 
   "devDependencies": {
     "@types/bun": "latest"
   },
