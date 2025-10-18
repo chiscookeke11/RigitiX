@@ -10,6 +10,7 @@ import { Page as UpdatePasswordPage } from "./pages/authentication/UpdatePasswor
 import { DashboardLayout } from "./layouts/DashboardLayout.tsx";
 import { Dashboard } from "./pages/dashboard/Dashboard.tsx";
 import { EventCreate } from "./pages/dashboard/EventCreate.tsx";
+import { Page as AuthLaunchpad } from "./pages/authentication/Launchpad.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
     {
       path: "interests",
       Component: InterestsPage
+    },
+    {
+      path: "launchpad",
+      Component: AuthLaunchpad
     },
     {
       Component: AuthenticationLayout,
