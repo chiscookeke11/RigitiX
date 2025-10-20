@@ -8,9 +8,9 @@ import { Page as InterestsPage } from "./pages/authentication/Interests.tsx";
 import { Page as ForgotPasswordPage } from "./pages/authentication/ForgotPassword.tsx";
 import { Page as UpdatePasswordPage } from "./pages/authentication/UpdatePassword.tsx";
 import { DashboardLayout } from "./layouts/DashboardLayout.tsx";
-import { Dashboard } from "./pages/dashboard/Dashboard.tsx";
+import { Page as DashboardPage } from "./pages/dashboard/Dashboard.tsx";
 import { EventCreate } from "./pages/dashboard/EventCreate.tsx";
-import { Page as AuthLaunchpad } from "./pages/authentication/Launchpad.tsx";
+import { Page as AuthLaunchpadPage } from "./pages/authentication/Launchpad.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
     },
     {
       path: "launchpad",
-      Component: AuthLaunchpad
+      Component: AuthLaunchpadPage
     },
     {
       Component: AuthenticationLayout,
@@ -60,7 +60,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        Component: Dashboard
+        Component: DashboardPage
       },
       {
         path: "events",
