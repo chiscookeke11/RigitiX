@@ -3,7 +3,7 @@ import { useState } from "react";
 import { format } from 'date-fns';
 import { MoneyIcon } from "../../assets/icons/Money"
 import { PeopleIcon } from "../../assets/icons/People"
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, BarChart, Bar, XAxis, YAxis } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis } from "recharts";
 
 export function Page() {
   const [isEmpty, setIsEmpty] = useState(false);
@@ -15,139 +15,152 @@ export function Page() {
           <h1 className="text-xl font-bold text-gray-900 mb-[4px]">Welcome Back, Owai</h1>
           <p className="text-[#737373] text-[14px]">Welcome back Tena, we hope you have event to attend this weekend.</p>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-[8px]">
-          <StatCard title="Total tickets sold" value={30} change={30} />
-          <StatCard title="Total  events Created" value={40} change={10} />
-          <StatCard title="Total revenue from ticket sales" value={40} change={-10} />
+        <StatsSection />
+        <UpcomingEventsSection isEmpty={isEmpty} setIsEmpty={setIsEmpty} />
+        <TicketSalesSection isEmpty={isEmpty} setIsEmpty={setIsEmpty} />
+        <BottomSection isEmpty={isEmpty} setIsEmpty={setIsEmpty} />
+      </div>
+    </div>
+  );
+}
 
-          <StatCard title="Total user on the platform" value={2} change={10} />
-          <StatCard title="Total revenew for current even" value={20} change={10} />
-          <StatCard title="Average ticket price" value={40} change={10} />
-        </div>
+function StatsSection() {
+  return (
+    <div className="grid grid-cols-2 lg:grid-cols-3 gap-[8px]">
+      <StatCard title="Total tickets sold" value={30} change={30} />
+      <StatCard title="Total  events Created" value={40} change={10} />
+      <StatCard title="Total revenue from ticket sales" value={40} change={-10} />
+      <StatCard title="Total user on the platform" value={2} change={10} />
+      <StatCard title="Total revenew for current even" value={20} change={10} />
+      <StatCard title="Average ticket price" value={40} change={10} />
+    </div>
+  );
+}
 
-        <div className="mt-[8px] rounded-[24px] bg-white p-6 min-h-[300px]">
-          <div className="flex justify-between items-center mb-[20px]">
-            <h2 className="text-[14px] font-bold">Upcoming Events</h2>
-            <button
-              className={`text-sm px-[15px] py-[8px] rounded-full cursor-pointer ${isEmpty ? 'bg-[#FAFAFA] text-[#D4D4D4] ' : 'border-2 border-[#FAFAFA] hover:bg-[#FAFAFA] '} `}
-              onClick={() => setIsEmpty(!isEmpty)}
-            >
-              View all
-            </button>
+function UpcomingEventsSection({ isEmpty, setIsEmpty }: { isEmpty: boolean; setIsEmpty: (value: boolean) => void }) {
+  return (
+    <div className="mt-[8px] rounded-[24px] bg-white p-6 min-h-[300px]">
+      <div className="flex justify-between items-center mb-[20px]">
+        <h2 className="text-[14px] font-bold">Upcoming Events</h2>
+        <button
+          className={`text-sm px-[15px] py-[8px] rounded-full cursor-pointer ${isEmpty ? 'bg-[#FAFAFA] text-[#D4D4D4] ' : 'border-2 border-[#FAFAFA] hover:bg-[#FAFAFA] '} `}
+          onClick={() => setIsEmpty(!isEmpty)}
+        >
+          View all
+        </button>
+      </div>
+
+      <div className="mt-[28px]">
+        {isEmpty ? (
+          <div className="flex flex-col items-center justify-center py-20 max-w-[300px] mx-auto min-h-[200px]">
+            <img src="/images/empty-upcoming-events.png" alt="No Events" className="mb-[8px] w-[70px]" />
+            <p className="mb-4 text-center text-[#737373] text-[16px]">
+              Looks a little quiet here. Be the first to schedule an event and get things started!
+            </p>
+            <CreateButton onClick={() => setIsEmpty(!isEmpty)} text="Create Event" />
           </div>
-
-          <div className="mt-[28px]">
-            {isEmpty ? (
-              <div className="flex flex-col items-center justify-center py-20 max-w-[300px] mx-auto min-h-[200px]">
-                <img src="/images/empty-upcoming-events.png" alt="No Events" className="mb-[8px] w-[70px]" />
-                <p className="mb-4 text-center text-[#737373] text-[16px]">
-                  Looks a little quiet here. Be the first to schedule an event and get things started!
-                </p>
-                <CreateButton onClick={() => setIsEmpty(!isEmpty)} text="Create Event" />
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[14px]">
-                {[1, 2, 3].map((_, index) => (
-                  <EventCard
-                    key={index}
-                    image={'/images/default-event.jpg'}
-                    date={new Date()}
-                    title={`Mail Design Conference ${index + 1}`}
-                    location={`Christ Chapel International Churches ${index + 1}`}
-                    published={true}
-                    totalTickets={100 + index * 50}
-                    soldTickets={70 + index * 20}
-                    pricePerTicket={50 - index * 10}
-                  />
-                ))}
-              </div>
-            )}
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[14px]">
+            {[1, 2, 3].map((_, index) => (
+              <EventCard
+                key={index}
+                image={'/images/default-event.jpg'}
+                date={new Date()}
+                title={`Mail Design Conference ${index + 1}`}
+                location={`Christ Chapel International Churches ${index + 1}`}
+                published={true}
+                totalTickets={100 + index * 50}
+                soldTickets={70 + index * 20}
+                pricePerTicket={50 - index * 10}
+              />
+            ))}
           </div>
-        </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
+function TicketSalesSection({ isEmpty, setIsEmpty }: { isEmpty: boolean; setIsEmpty: (value: boolean) => void }) {
+  return (
+    <div className="mt-[8px] rounded-[24px] bg-white p-6 min-h-[300px]">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-[14px] font-bold">Ticket Sales Performance</h2>
+        <button
+          className={`text-sm px-[15px] py-[8px] rounded-full cursor-pointer ${isEmpty ? 'bg-[#FAFAFA] text-[#D4D4D4] ' : 'border-2 border-[#FAFAFA] hover:bg-[#FAFAFA] '} `}
+          onClick={() => setIsEmpty(!isEmpty)}
+        >
+          Last Year
+        </button>
+      </div>
 
-        <div className="mt-[8px] rounded-[24px] bg-white p-6 min-h-[300px]">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-[14px] font-bold">Ticket Sales Performance</h2>
-            <button
-              className={`text-sm px-[15px] py-[8px] rounded-full cursor-pointer ${isEmpty ? 'bg-[#FAFAFA] text-[#D4D4D4] ' : 'border-2 border-[#FAFAFA] hover:bg-[#FAFAFA] '} `}
-              onClick={() => setIsEmpty(!isEmpty)}
-            >
-              Last Year
-            </button>
+      <div className="mt-[28px]">
+        {isEmpty ? (
+          <div className="flex flex-col items-center justify-center py-20 max-w-[300px] mx-auto min-h-[200px]">
+            <img src="/images/empty-ticket-sales.png" alt="No Events" className="mb-[8px] w-[70px]" />
+            <p className="mb-4 text-center text-[#737373] text-[16px]">
+              Looks a little quiet here. Be the first to schedule an event and get things started!
+            </p>
           </div>
+        ) : (
+          <TicketSalesChart />
+        )}
+      </div>
+    </div>
+  );
+}
 
-          <div className="mt-[28px]">
-            {isEmpty ? (
-              <div className="flex flex-col items-center justify-center py-20 max-w-[300px] mx-auto min-h-[200px]">
-                <img src="/images/empty-ticket-sales.png" alt="No Events" className="mb-[8px] w-[70px]" />
-                <p className="mb-4 text-center text-[#737373] text-[16px]">
-                  Looks a little quiet here. Be the first to schedule an event and get things started!
-                </p>
+function BottomSection({ isEmpty, setIsEmpty }: { isEmpty: boolean; setIsEmpty: (value: boolean) => void }) {
+  return (
+    <div className="mt-[8px] grid grid-cols-[400px_1fr] gap-[8px]">
+      <div className="rounded-[24px] bg-white p-6 min-h-[300px]">
+        <h2 className="text-[14px] font-bold">Ticket Category Breakdown</h2>
 
-              </div>
-            ) : (
-              <TicketSalesChart />
-            )}
-
-          </div>
-        </div>
-
-        <div className="mt-[8px] grid grid-cols-[400px_1fr] gap-[8px]">
-          <div className="rounded-[24px] bg-white p-6 min-h-[300px]">
-            <h2 className="text-[14px] font-bold">Ticket Category Breakdown</h2>
-
-            <div className="mt-[28px]">
-              {isEmpty ? (
-                <div className="flex flex-col items-center justify-center py-20 max-w-[300px] mx-auto min-h-[200px]">
-                  <img src="/images/empty-ticket-cards.png" alt="No Events" className="mb-[8px] w-[70px]" />
-                  <p className="mb-4 text-center text-[#737373] text-[16px]">
-                    Looks a little quiet here. Be the first to schedule an event and get things started!
-                  </p>
-
-                </div>
-              ) : (
-                <TicketCategoryBreakdown categories={[
-                  { name: 'Free Ticket', value: 10000, color: '#5DD9A5' },
-                  { name: 'Paid Ticket', value: 50000, color: '#5BB3FF' }
-                ]} />
-              )}
+        <div className="mt-[28px]">
+          {isEmpty ? (
+            <div className="flex flex-col items-center justify-center py-20 max-w-[300px] mx-auto min-h-[200px]">
+              <img src="/images/empty-ticket-cards.png" alt="No Events" className="mb-[8px] w-[70px]" />
+              <p className="mb-4 text-center text-[#737373] text-[16px]">
+                Looks a little quiet here. Be the first to schedule an event and get things started!
+              </p>
             </div>
-          </div>
+          ) : (
+            <TicketCategoryBreakdown categories={[
+              { name: 'Free Ticket', value: 10000, color: '#5DD9A5' },
+              { name: 'Paid Ticket', value: 50000, color: '#5BB3FF' }
+            ]} />
+          )}
+        </div>
+      </div>
 
-          <div className="rounded-[24px] bg-white p-6 min-h-[300px]">
-            <h2 className="text-[14px] font-bold">Top Performing Events</h2>
-            <div className="mt-[18px]">
-              {isEmpty ? (
-                <div className="flex flex-col items-center justify-center py-20 max-w-[300px] mx-auto min-h-[200px]">
-                  <img src="/images/empty-top-events.png" alt="No Events" className="mb-[8px] w-[70px]" />
-                  <p className="mb-4 text-center text-[#737373] text-[16px]">
-                    Looks a little quiet here. Be the first to schedule an event and get things started!
-                  </p>
-                  <CreateButton onClick={() => setIsEmpty(!isEmpty)} text="Create Event" />
-
-                </div>
-              ) : (
-                <div className="flex gap-[8px] max-w-full overflow-scroll">
-                  {[1, 2].map((_, index) => (
-                    <EventCard
-                      key={index}
-                      image={'/images/default-event.jpg'}
-                      date={new Date()}
-                      title={`Mail Design Conference ${index + 1}`}
-                      location={`Christ Chapel International Churches ${index + 1}`}
-                      published={false}
-                      totalTickets={100 + index * 50}
-                      soldTickets={70 + index * 20}
-                      pricePerTicket={50 - index * 10}
-                    />
-                  ))}
-
-                </div>
-              )}
+      <div className="rounded-[24px] bg-white p-6 min-h-[300px]">
+        <h2 className="text-[14px] font-bold">Top Performing Events</h2>
+        <div className="mt-[18px]">
+          {isEmpty ? (
+            <div className="flex flex-col items-center justify-center py-20 max-w-[300px] mx-auto min-h-[200px]">
+              <img src="/images/empty-top-events.png" alt="No Events" className="mb-[8px] w-[70px]" />
+              <p className="mb-4 text-center text-[#737373] text-[16px]">
+                Looks a little quiet here. Be the first to schedule an event and get things started!
+              </p>
+              <CreateButton onClick={() => setIsEmpty(!isEmpty)} text="Create Event" />
             </div>
-          </div>
-
+          ) : (
+            <div className="flex gap-[8px] max-w-full overflow-scroll">
+              {[1, 2].map((_, index) => (
+                <EventCard
+                  key={index}
+                  image={'/images/default-event.jpg'}
+                  date={new Date()}
+                  title={`Mail Design Conference ${index + 1}`}
+                  location={`Christ Chapel International Churches ${index + 1}`}
+                  published={false}
+                  totalTickets={100 + index * 50}
+                  soldTickets={70 + index * 20}
+                  pricePerTicket={50 - index * 10}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
