@@ -166,6 +166,7 @@ function PayoutTable() {
   );
 }
 
+
 function RequestPayoutModal(props: { open: boolean, close: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
 

@@ -1,6 +1,6 @@
 interface ButtonProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline';
+  variant?: 'primary' | 'secondary' | 'outline' | "white";
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   onClick?: () => void;
@@ -11,7 +11,6 @@ interface ButtonProps {
 export function Button({
   children,
   variant = 'primary',
-  size = 'md',
   className = '',
   onClick,
   type = 'button',
@@ -22,7 +21,8 @@ export function Button({
   const variantClasses = {
     primary: 'bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500',
     secondary: 'bg-gray-500 text-white hover:bg-gray-600 focus:ring-gray-500',
-    outline: 'border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500'
+    outline: 'border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500',
+    white: 'bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500',
   };
 
 
