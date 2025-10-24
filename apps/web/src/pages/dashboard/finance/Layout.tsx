@@ -4,11 +4,11 @@ export function Page() {
   const location = useLocation();
 
   const tabs = [
-    { name: "Revenue", path: "/dashboard/finance" },
-    { name: "Payout", path: "/dashboard/finance/payout" },
-    { name: "Payout Method", path: "/dashboard/finance/payout-method" },
-    { name: "Transactions", path: "/dashboard/finance/transactions" },
-    { name: "Refunds", path: "/dashboard/finance/refunds" },
+    { name: "Revenue", path: "/dashboard/financials" },
+    { name: "Payout", path: "/dashboard/financials/payout" },
+    { name: "Payout Method", path: "/dashboard/financials/payout-method" },
+    { name: "Transactions", path: "/dashboard/financials/transactions" },
+    { name: "Refunds", path: "/dashboard/financials/refunds" },
   ];
 
   return (

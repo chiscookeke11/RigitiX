@@ -78,7 +78,7 @@ export const router = createBrowserRouter([
         ]
       },
       {
-        path: "finance",
+        path: "financials",
         Component: FinanceLayout,
         children: [
           {

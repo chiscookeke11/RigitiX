@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ArrowLeftDownIcon } from "../../../assets/icons/ArrowLeftDown";
-import { ChevronDownIcon } from "../../../assets/icons/ChevronDown";
 import { SearchIcon } from "../../../assets/icons/Search";
 import { Table, TableHeader, TableBody, TableRow, TableHeaderCell, TableCell } from "../../../components/Table";
 import { Pagination } from "../../../components/Pagination";
