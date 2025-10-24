@@ -52,7 +52,7 @@ export function TableHeader({ children, className = "" }: TableHeaderProps) {
 
 export function TableBody({ children, className = "" }: TableBodyProps) {
   return (
-    <div className={`bg-white rounded-[10px] mt-[10px] overflow-hidden ${className}`}>
+    <div className={`bg-white rounded-[10px] mt-[10px] overflow-visible ${className}`}>
       <table className="w-full table-fixed">
         <tbody>
           {children}
