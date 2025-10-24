@@ -8,6 +8,7 @@ import { Input } from "../../../components/Input"
 import { Select } from "../../../components/Select"
 import { Button } from "../../../components/Button"
 import { Pagination } from "../../../components/Pagination"
+import { Table, TableHeader, TableBody, TableRow, TableHeaderCell, TableCell } from "../../../components/Table"
 
 export function Page() {
   const [isRequestPayoutOpen, setIsRequestPayoutOpen] = useState(false);
@@ -42,7 +43,64 @@ export function Page() {
       </div>
 
       <div className="mt-[21px]">
-        <PayoutTable />
+        <Table>
+          <TableHeader>
+            <TableHeaderCell isFirst>Date Requested</TableHeaderCell>
+            <TableHeaderCell>Payout ID</TableHeaderCell>
+            <TableHeaderCell>Amount</TableHeaderCell>
+            <TableHeaderCell>Method</TableHeaderCell>
+            <TableHeaderCell>Status</TableHeaderCell>
+            <TableHeaderCell>Date Approved</TableHeaderCell>
+            <TableHeaderCell isLast>Reference</TableHeaderCell>
+          </TableHeader>
+          
+          <TableBody>
+            <TableRow>
+              <TableCell>2024-01-15</TableCell>
+              <TableCell>PO-001</TableCell>
+              <TableCell>$25,000</TableCell>
+              <TableCell>Bank Transfer</TableCell>
+              <TableCell>
+                <span className="px-2 py-1 bg-[#E0FAEC] text-[#1FC16B] rounded-[8px] text-[14px]">Paid</span>
+              </TableCell>
+              <TableCell className="text-gray-700">Bank Transfer</TableCell>
+              <TableCell className="text-gray-700">TXN-789123</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>2024-01-08</TableCell>
+              <TableCell>PO-002</TableCell>
+              <TableCell>$18,500</TableCell>
+              <TableCell>PayPal</TableCell>
+              <TableCell>
+                <span className="px-2 py-1 bg-[#E0FAEC] text-[#1FC16B] rounded-[8px] text-[14px]">Paid</span>
+              </TableCell>
+              <TableCell className="text-gray-700">PayPal</TableCell>
+              <TableCell className="text-gray-700">PP-456789</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>2024-01-01</TableCell>
+              <TableCell>PO-003</TableCell>
+              <TableCell>$32,000...</TableCell>
+              <TableCell>Bank Transfer</TableCell>
+              <TableCell>
+                <span className="px-2 py-1 bg-[#FFF1EB] text-[#FF8447] rounded-[8px] text-[14px]">Pending</span>
+              </TableCell>
+              <TableCell className="text-gray-700">Bank Transfer</TableCell>
+              <TableCell className="text-gray-700">TXN-123456</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>2023-12-25</TableCell>
+              <TableCell>PO-004</TableCell>
+              <TableCell>$15,000</TableCell>
+              <TableCell>PayPal</TableCell>
+              <TableCell>
+                <span className="px-2 py-1 bg-[#FFEBEC] text-[#FB3748] rounded-[8px] text-[14px]">Failed</span>
+              </TableCell>
+              <TableCell className="text-gray-700">PayPal</TableCell>
+              <TableCell className="text-gray-700">PP-789012</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </div>
       
       <div className="mt-6">
@@ -75,93 +133,6 @@ function RevenueCard(props: { title: string, amount: number, options?: string[] 
         </div>
       </div>
 
-    </div>
-  );
-}
-
-function PayoutTable() {
-  const payouts = [
-    {
-      dateRequested: "2024-01-15",
-      payoutId: "PO-001",
-      amount: "$25,000",
-      method: "Bank Transfer",
-      status: "Paid",
-      dateApproved: "Bank Transfer",
-      reference: "TXN-789123"
-    },
-    {
-      dateRequested: "2024-01-08",
-      payoutId: "PO-002",
-      amount: "$18,500",
-      method: "PayPal",
-      status: "Paid",
-      dateApproved: "PayPal",
-      reference: "PP-456789"
-    },
-    {
-      dateRequested: "2024-01-01",
-      payoutId: "PO-003",
-      amount: "$32,000...",
-      method: "Bank Transfer",
-      status: "Pending",
-      dateApproved: "Bank Transfer",
-      reference: "TXN-123456"
-    },
-    {
-      dateRequested: "2023-12-25",
-      payoutId: "PO-004",
-      amount: "$15,000",
-      method: "PayPal",
-      status: "Failed",
-      dateApproved: "PayPal",
-      reference: "PP-789012"
-    }
-  ];
-
-  return (
-    <div className="w-full">
-      <table className="w-full table-auto border-separate border-spacing-0">
-        <thead>
-          <tr className="bg-[#124B68]">
-            <th className="px-[12px] py-[8px] text-[14px] text-white rounded-l-[10px] text-left">Date Requested</th>
-            <th className="px-[12px] py-[8px] text-[14px] text-white text-left">Payout ID</th>
-            <th className="px-[12px] py-[8px] text-[14px] text-white text-left">Amount</th>
-            <th className="px-[12px] py-[8px] text-[14px] text-white text-left">Method</th>
-            <th className="px-[12px] py-[8px] text-[14px] text-white text-left">Status</th>
-            <th className="px-[12px] py-[8px] text-[14px] text-white text-left">Date Approved</th>
-            <th className="px-[12px] py-[8px] text-[14px] text-white rounded-r-[10px] text-left">Reference</th>
-          </tr>
-        </thead>
-      </table>
-
-      <div className="bg-white rounded-[10px] mt-[10px] overflow-hidden">
-        <table className="w-full">
-          <tbody>
-            {payouts.map((payout, index) => (
-              <tr key={index} className="border-b border-[#EEEFF1] last:border-b-0">
-                <td className="p-4 text-[14px] text-[#404040] w-[14.28%]">{payout.dateRequested}</td>
-                <td className="p-4 text-[14px] text-[#404040] w-[14.28%]">{payout.payoutId}</td>
-                <td className="p-4 text-[14px] text-[#404040] w-[14.28%]">{payout.amount}</td>
-                <td className="p-4 text-[14px] text-[#404040] w-[14.28%]">{payout.method}</td>
-                <td className="p-4 text-[14px] text-[#404040] w-[14.28%]">
-                  {payout.status === "Paid" && (
-                    <span className="px-2 py-1 bg-[#E0FAEC] text-[#1FC16B] rounded-[8px] text-[14px]">Paid</span>
-                  )}
-                  {payout.status === "Pending" && (
-                    <span className="px-2 py-1 bg-[#FFF1EB] text-[#FF8447] rounded-[8px] text-[14px]">Pending</span>
-                  )}
-                  {payout.status === "Failed" && (
-                    <span className="px-2 py-1 bg-[#FFEBEC] text-[#FB3748] rounded-[8px] text-[14px]">Failed</span>
-                  )}
-                </td>
-                <td className="p-4 text-[14px] text-gray-700 w-[14.28%]">{payout.dateApproved}</td>
-                <td className="p-4 text-[14px] text-gray-700 w-[14.28%]">{payout.reference}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
     </div>
   );
 }
