@@ -18,7 +18,7 @@ interface SidebarProps {
 
 export function Sidebar({ activeItem = "dashboard" }: SidebarProps) {
   const navigationItems = [
-    { id: "dashboard", label: "Dashboard", icon: DashboardSquare01Icon },
+    { id: "", label: "Dashboard", icon: DashboardSquare01Icon },
     { id: "events", label: "Events", icon: Calendar02Icon },
     { id: "sales", label: "Sales & Analytics", icon: SignalFull02Icon },
     { id: "financials", label: "Financials & Payouts", icon: Coins01Icon },
@@ -63,7 +63,7 @@ export function Sidebar({ activeItem = "dashboard" }: SidebarProps) {
           {navigationItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeItem === item.id;
-            
+
             return (
               <li key={item.id} className="relative">
                 {isActive && (
@@ -71,15 +71,14 @@ export function Sidebar({ activeItem = "dashboard" }: SidebarProps) {
                 )}
                 <NavLink
                   to={`/dashboard/${item.id}`}
-                  className={`nav-link flex items-center ${
-                    isActive 
-                      ? 'active text-white' 
-                      : 'text-gray-300 hover:text-white'
-                  }`}
+                  className={`nav-link flex items-center ${isActive
+                    ? 'active text-white'
+                    : 'text-gray-300 hover:text-white'
+                    }`}
                 >
-                  <Icon 
-                    size={20} 
-                    color={isActive ? "#FFFFFF" : "#A3A3A3"} 
+                  <Icon
+                    size={20}
+                    color={isActive ? "#FFFFFF" : "#A3A3A3"}
                     className="nav-link-icon mr-2"
                   />
                   <span className="nav-link-text text-sm font-medium leading-5 tracking-tight">
@@ -98,7 +97,7 @@ export function Sidebar({ activeItem = "dashboard" }: SidebarProps) {
           {utilityItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeItem === item.id;
-            
+
             return (
               <li key={item.id} className="relative">
                 {isActive && (
@@ -106,15 +105,14 @@ export function Sidebar({ activeItem = "dashboard" }: SidebarProps) {
                 )}
                 <NavLink
                   to={`/dashboard/${item.id}`}
-                  className={`nav-link flex items-center ${
-                    isActive 
-                      ? 'active text-white' 
-                      : 'text-gray-300 hover:text-white'
-                  }`}
+                  className={`nav-link flex items-center ${isActive
+                    ? 'active text-white'
+                    : 'text-gray-300 hover:text-white'
+                    }`}
                 >
-                  <Icon 
-                    size={20} 
-                    color={isActive ? "#FFFFFF" : "#A3A3A3"} 
+                  <Icon
+                    size={20}
+                    color={isActive ? "#FFFFFF" : "#A3A3A3"}
                     className="nav-link-icon mr-2"
                   />
                   <span className="nav-link-text text-sm font-medium leading-5 tracking-tight">
