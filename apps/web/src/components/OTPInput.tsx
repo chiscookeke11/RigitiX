@@ -59,7 +59,7 @@ export function OTPInput({ length = 6, value, onChange, className = '' }: OTPInp
       {Array.from({ length }, (_, index) => (
         <input
           key={index}
-          ref={(el) => (inputRefs.current[index] = el)}
+          ref={(el) => { inputRefs.current[index] = el; }}
           type="text"
           maxLength={1}
           value={otp[index] || ''}

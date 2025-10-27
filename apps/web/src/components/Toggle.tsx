@@ -12,22 +12,20 @@ export function Toggle({ leftLabel, rightLabel, value, onChange, className = '' 
       <button
         type="button"
         onClick={() => onChange('left')}
-        className={`flex-1 px-6 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
-          value === 'left'
-            ? 'bg-orange-500 text-white shadow-sm'
+        className={`flex-1 px-6 py-2 text-sm font-medium rounded-full transition-all duration-200 ${value === 'left'
+            ? 'bg-[#F87B07] text-white shadow-sm'
             : 'text-gray-600 hover:text-gray-800'
-        }`}
+          }`}
       >
         {leftLabel}
       </button>
       <button
         type="button"
         onClick={() => onChange('right')}
-        className={`flex-1 px-6 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
-          value === 'right'
-            ? 'bg-orange-500 text-white shadow-sm'
+        className={`flex-1 px-6 py-2 text-sm font-medium rounded-full transition-all duration-200 ${value === 'right'
+            ? 'bg-[#F87B07] text-white shadow-sm'
             : 'text-gray-600 hover:text-gray-800'
-        }`}
+          }`}
       >
         {rightLabel}
       </button>

@@ -103,7 +103,7 @@ export function Page() {
           </TableHeader>
 
           <TableBody>
-            {refunds.map((refund, index) => (
+            {refunds.map((refund) => (
               <TableRow key={refund.id} className="group hover:bg-gray-50">
                 <TableCell className="w-[12%]">{refund.id}</TableCell>
                 <TableCell className="w-[14%]">{refund.customer}</TableCell>
@@ -206,7 +206,7 @@ function RejectRequestModal(props: { open: boolean, close: () => void, refundId:
   }, [props.open]);
 
   const onClose = (e: any) => {
-    e.stopPropagation();
+    e?.stopPropagation();
     props.close();
   }
 
@@ -243,7 +243,7 @@ function RejectRequestModal(props: { open: boolean, close: () => void, refundId:
           <Button
             variant="white"
             className="px-6 py-3 rounded-full text-sm"
-            onClick={onClose}
+            onClick={() => onClose(null)}
           >
             Cancel
           </Button>

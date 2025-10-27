@@ -285,7 +285,7 @@ function DeletePayoutMethodModal(props: { open: boolean, close: () => void }) {
   }, [props.open]);
 
   const onClose = (e: any) => {
-    e.stopPropagation();
+    e?.stopPropagation();
     props.close();
   }
 
@@ -314,7 +314,7 @@ function DeletePayoutMethodModal(props: { open: boolean, close: () => void }) {
           <Button
             variant="white"
             className="px-[24px] py-[10px] rounded-full text-[14px]"
-            onClick={onClose}
+            onClick={() => onClose(null)}
           >
             Cancel
           </Button>
