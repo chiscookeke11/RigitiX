@@ -17,6 +17,7 @@ import { Page as PayoutPage } from "./pages/dashboard/finance/Payout.tsx";
 import { Page as PayoutMethodPage } from "./pages/dashboard/finance/PayoutMethod.tsx";
 import { Page as TransactionsPage } from "./pages/dashboard/finance/Transactions.tsx";
 import { Page as RefundsPage } from "./pages/dashboard/finance/Refunds.tsx";
+import { Page as AllPagesPage } from "./pages/AllPages.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -107,7 +108,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <div>Redirecting to dashboard...</div>
+    Component: AllPagesPage
   },
   {
     path: "/*",
