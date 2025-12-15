@@ -1,12 +1,13 @@
 import { Bookmark01Icon, Calendar04Icon, Comment02Icon, FavouriteIcon, MapsIcon, Share01Icon } from "hugeicons-react"
-import type { FeaturedEventsDataType } from "../../types/types"
 import { timeAgo } from "../../utils/time"
+import type { EventsDataType } from "../../types/types"
+import { Button } from "../Button"
 
 
 
 
 interface EventCardProps {
-    data: FeaturedEventsDataType
+    data: EventsDataType
 }
 
 export default function EventCard({ data }: EventCardProps) {
@@ -77,7 +78,7 @@ export default function EventCard({ data }: EventCardProps) {
 
 
 
-                get ticket button
+                <Button variant="primary" className="w-full max-w-[202px] rounded-3xl text-sm font-medium p-2 hover:bg-blue-800! duration-300 ease-in-out transition-all  custom-shadow " >Get Ticket</Button>
             </div>
 
 

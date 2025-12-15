@@ -1,8 +1,8 @@
-import type { FeaturedEventsDataType } from "../types/types";
+import type { EventsDataType } from "../types/types";
 
 
 
-export const FeaturedEventsData: FeaturedEventsDataType[] = [
+export const FeaturedEventsData: EventsDataType[] = [
     {
         hostName: "Dribbble Meetup",
         hostImage: "/images/featuredEvents/host.png",

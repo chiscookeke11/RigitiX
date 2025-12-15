@@ -1,5 +1,6 @@
+import type { LucideIcon } from "lucide-react";
 
-export interface FeaturedEventsDataType {
+export interface EventsDataType {
     hostName: string,
     hostImage: string,
     eventName: string,
@@ -19,4 +20,30 @@ export interface TestimonialCardTypes {
     image: string;
     name: string;
     testimony: string;
+}
+
+
+export interface customSelectTypes {
+    label: string;
+    value: string
+}
+
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  image: string;
+}
+
+
+
+
+
+export interface TimelineItem {
+  year: string;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  type: string;
 }

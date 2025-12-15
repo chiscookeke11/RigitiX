@@ -19,6 +19,7 @@ import { Page as TransactionsPage } from "./pages/dashboard/finance/Transactions
 import { Page as RefundsPage } from "./pages/dashboard/finance/Refunds.tsx";
 import { Page as AllPagesPage } from "./pages/AllPages.tsx";
 import { Page as HomePage } from "./pages/Home.tsx";
+import { Page as AboutPage } from "./pages/About.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -118,5 +119,9 @@ export const router = createBrowserRouter([
   {
     path: "/home",
     Component: HomePage
-  }
+  },
+  {
+    path: "/about",
+    Component: AboutPage
+  },
 ]);

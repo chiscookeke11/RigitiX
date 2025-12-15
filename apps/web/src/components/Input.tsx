@@ -20,7 +20,7 @@ export function Input({ showPasswordToggle = false, icon, className = '', ...pro
       <input
         {...props}
         type={inputType}
-        className={`w-full px-3 py-[8px] ${icon ? 'pl-10' : ''} ${showPasswordToggle ? 'pr-10' : ''} bg-gray-50 border border-transparent rounded-[8px] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 text-[14px] ${className}`}
+        className={`w-full px-3 py-2 ${icon ? 'pl-10' : ''} ${showPasswordToggle ? 'pr-10' : ''} bg-gray-50 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 text-[14px] ${className}`}
       />
       {showPasswordToggle && props.type === 'password' && (
         <button

@@ -6,12 +6,15 @@ import { Theme } from '@radix-ui/themes';
 import './index.css'
 import { router } from "./routes.tsx";
 import UtilityNavbar from './components/UtilityNavbar.tsx';
+import Footer from './components/Footer.tsx';
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Theme>
       <UtilityNavbar/>
       <RouterProvider router={router} />
+      <Footer/>
     </Theme>
   </StrictMode>,
 )
