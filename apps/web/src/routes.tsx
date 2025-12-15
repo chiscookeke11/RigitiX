@@ -18,6 +18,7 @@ import { Page as PayoutMethodPage } from "./pages/dashboard/finance/PayoutMethod
 import { Page as TransactionsPage } from "./pages/dashboard/finance/Transactions.tsx";
 import { Page as RefundsPage } from "./pages/dashboard/finance/Refunds.tsx";
 import { Page as AllPagesPage } from "./pages/AllPages.tsx";
+import { Page as HomePage } from "./pages/Home.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -113,5 +114,9 @@ export const router = createBrowserRouter([
   {
     path: "/*",
     element: <div>404 Not Found</div>
+  },
+  {
+    path: "/home",
+    Component: HomePage
   }
 ]);
