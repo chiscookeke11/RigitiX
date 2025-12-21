@@ -2,17 +2,29 @@ import { Bookmark01Icon, Calendar04Icon, Comment02Icon, FavouriteIcon, MapsIcon,
 import { timeAgo } from "../../utils/time"
 import type { EventsDataType } from "../../types/types"
 import { Button } from "../Button"
+import { Link } from "react-router-dom";
 
 
 
 
 interface EventCardProps {
-    data: EventsDataType
+    data: EventsDataType;
+    className?: string
 }
 
-export default function EventCard({ data }: EventCardProps) {
+export default function EventCard({ data, className }: EventCardProps) {
+
+
+    const formatLikes = (num: number) => {
+        if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1).replace(/\.0$/, "")}M`;
+        if (num >= 1_000) return `${(num / 1_000).toFixed(1).replace(/\.0$/, "")}K`;
+        return num.toLocaleString();
+    };
+
+
     return (
-        <div className="w-full max-w-[579px] bg-white rounded-[37px] py-6 px-[25px] flex flex-col items-start gap-[18px] shrink-0  " >
+        <Link to={`/event/${data.id}`} >
+        <div className={`w-full max-w-[579px] bg-white rounded-[37px] py-6 px-[25px] flex flex-col items-start gap-[18px] shrink-0 ${className}  `} >
 
             <div className="w-full flex items-center justify-between" >
                 <div className="w-fit flex gap-[8.71px] items-center " >
@@ -68,9 +80,9 @@ export default function EventCard({ data }: EventCardProps) {
 
             <div className="w-full flex items-center justify-between  " >
                 <div className=" flex items-center gap-3" >
-                    {data.tags.map((tag, i) => (
-                        <span key={i} className="block py-1.5 px-[7px] bg-[#EEE9F1] rounded-3xl text-[#522672] font-medium text-sm   " > {tag}</span>
-                    ))}
+
+                    <span className="block py-1.5 px-[7px] bg-[#EEE9F1] rounded-3xl text-[#522672] font-medium text-sm   " > {data.category}</span>
+
                     <span className=" py-1.5 px-[7px] bg-[#EBF8FF] rounded-3xl text-[#124B68] font-medium text-sm flex items-center gap-1.5 " >
                         <img src="/images/featuredEvents/ticket-image.png" className="w-5 h-5" />
                         {data.status}</span>
@@ -86,7 +98,7 @@ export default function EventCard({ data }: EventCardProps) {
             {/* the stats row  */}
             <div className="w-full flex items-center justify-between  ">
                 <div className=" flex items-center gap-2.5" >
-                    <span className="flex items-center gap-[3.87px] text-sm font-medium " ><FavouriteIcon size={22} /> {data.number_of_likes}k</span>
+                    <span className="flex items-center gap-[3.87px] text-sm font-medium " ><FavouriteIcon size={22} /> {formatLikes(data.number_of_likes)}    </span>
                     <span className="flex items-center gap-[3.87px] text-sm font-medium" ><Comment02Icon size={22} /> {data.number_of_comments}</span>
                 </div>
 
@@ -99,5 +111,6 @@ export default function EventCard({ data }: EventCardProps) {
             </div>
 
         </div>
+        </Link>
     )
 }

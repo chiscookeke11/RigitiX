@@ -20,6 +20,8 @@ import { Page as RefundsPage } from "./pages/dashboard/finance/Refunds.tsx";
 import { Page as AllPagesPage } from "./pages/AllPages.tsx";
 import { Page as HomePage } from "./pages/Home.tsx";
 import { Page as AboutPage } from "./pages/About.tsx";
+import { Page as EventsPage } from "./pages/Events.tsx";
+import {Page as EventPage} from "./pages/Event.tsx"
 
 export const router = createBrowserRouter([
   {
@@ -123,5 +125,13 @@ export const router = createBrowserRouter([
   {
     path: "/about",
     Component: AboutPage
+  },
+    {
+    path: "/Events",
+    Component: EventsPage
+  },
+  {
+    path: "/event/:id",
+    Component: EventPage
   },
 ]);

@@ -68,7 +68,7 @@ export default function FeaturedEventsSection() {
       >
         {FeaturedEventsData.map((data, index) => (
           <SwiperSlide key={index}>
-            <EventCard key={index} data={data} />
+            <EventCard key={index} data={data}  />
           </SwiperSlide>
         ))}
       </Swiper>
