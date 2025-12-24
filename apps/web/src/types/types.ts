@@ -8,11 +8,17 @@ export interface EventsDataType {
   eventDescription: string,
   eventTime: Date,
   eventLocation: string,
+  town: string,
+  state: string,
+  country: string,
   timeCreated: Date,
   eventImage: string,
   category: string,
   number_of_likes: number,
   number_of_comments: number,
+  xUrl: string,
+  linkedInUrl: string,
+  facebookUrl: string,
   status: "Free" | "Paid",
   tags?: string[],
   galleryImages?: string[],
@@ -28,6 +34,20 @@ export interface EventsDataType {
     instaUrl: string;
     xUrl: string
   }[],
+  price?: {
+    Regular: {
+      price: number,
+      amountLeft: number,
+    },
+    VIP: {
+      price: number,
+      amountLeft: number,
+    },
+    VVIP: {
+      price: number,
+      amountLeft: number,
+    },
+  }
 }
 
 
@@ -61,4 +81,12 @@ export interface TimelineItem {
   description: string;
   icon: LucideIcon;
   type: string;
+}
+
+
+
+export interface CountryDataType {
+    label: string;
+    value: string;
+    iso: string
 }

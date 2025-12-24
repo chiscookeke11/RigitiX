@@ -7,6 +7,7 @@ import './index.css'
 import { router } from "./routes.tsx";
 import UtilityNavbar from './components/UtilityNavbar.tsx';
 import Footer from './components/Footer.tsx';
+ import { ToastContainer } from 'react-toastify';
 
 
 createRoot(document.getElementById('root')!).render(
@@ -15,6 +16,7 @@ createRoot(document.getElementById('root')!).render(
       <UtilityNavbar/>
       <RouterProvider router={router} />
       <Footer/>
+        <ToastContainer />
     </Theme>
   </StrictMode>,
 )

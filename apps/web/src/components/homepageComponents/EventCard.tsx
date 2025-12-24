@@ -23,7 +23,7 @@ export default function EventCard({ data, className }: EventCardProps) {
 
 
     return (
-        <Link to={`/event/${data.id}`} >
+        <Link to={`/event/${data.id}`} className="w-full" >
         <div className={`w-full max-w-[579px] bg-white rounded-[37px] py-6 px-[25px] flex flex-col items-start gap-[18px] shrink-0 ${className}  `} >
 
             <div className="w-full flex items-center justify-between" >
