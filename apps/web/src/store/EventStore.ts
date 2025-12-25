@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { Events } from "@/data/EventsData";
+import type { EventPurchaseDetails } from "@/types/types";
 
 type TicketType = "regular" | "vip" | "vvip";
 
@@ -21,6 +22,13 @@ interface EventState {
     // UI state
     currentStep: number;
 
+    // form State
+    formValues: EventPurchaseDetails;
+    setFormValues: <K extends keyof EventPurchaseDetails>(
+    key: K,
+    value: EventPurchaseDetails[K]
+  ) => void;
+
     // actions
     setEventById: (id: number) => void;
     addTicket: (type: TicketType) => void;
@@ -41,6 +49,35 @@ export const useEventStore = create<EventState>((set, get) => ({
 
     totalTickets: 0,
     currentStep: 1,
+
+
+    formValues: ({
+        firstName: "",
+        lastName: "",
+        email: "",
+        homeAddress: "",
+        country: "",
+        state: "",
+        city: "",
+        gender: "",
+        paymentOptions: "",
+        phoneNumber: "",
+        selectedTicketsAmount: {
+            regularTicketsAmount: 0,
+            vipTicketsAmount: 0,
+            vvipTicketsAmount: 0
+        }
+    }),
+
+
+    setFormValues: (key, value) =>
+  set((state) => ({
+    formValues: {
+      ...state.formValues,
+      [key]: value,
+    },
+  })),
+
 
     setEventById: (id) => {
         const event = Events.find((e) => e.id === id) ?? null;
@@ -103,4 +140,7 @@ export const useEventStore = create<EventState>((set, get) => ({
                 vvip: 0,
             },
         }),
+
+
+
 }));

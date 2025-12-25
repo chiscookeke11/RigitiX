@@ -2,9 +2,45 @@ import { Home05Icon, Mail01Icon, UserIcon } from "hugeicons-react";
 import { CustomSelect } from "../CustomSelect";
 import { countryOptions } from "@/data/country";
 import { GenderOptionsData } from "@/data/GenderOptions";
+import { paymentOptions } from "@/data/paymentInfoOptions";
+import { EventCheckBox } from "../EventCheckbox";
+import { useEventStore } from "@/store/EventStore";
+import type { EventPurchaseDetails } from "@/types/types";
+import type React from "react";
+
 
 
 export default function StepTwo() {
+
+
+    const { formValues, setFormValues } = useEventStore()
+
+    const handleCheckboxChange = (
+        name: keyof EventPurchaseDetails,
+        checked: boolean,
+        value?: string
+    ) => {
+        if (!checked) return;
+
+        if (value) {
+            setFormValues(name, value);
+        }
+    };
+
+
+
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+
+        setFormValues(name as keyof EventPurchaseDetails, value);
+    };
+
+
+
+    console.log(formValues)
+
+
     return (
         <>
             <div className="flex-1 min-w-0 flex flex-col gap-12">
@@ -23,8 +59,8 @@ export default function StepTwo() {
                                         id="firstname"
                                         type="text"
                                         placeholder="Placeholder text..."
-                                    // value={emailAddress}
-                                    // onChange={(e) => setEmailAddress(e.target.value)}
+                                        value={formValues.firstName}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </label>
@@ -40,8 +76,8 @@ export default function StepTwo() {
                                         id="lastname"
                                         type="text"
                                         placeholder="Placeholder text..."
-                                    // value={emailAddress}
-                                    // onChange={(e) => setEmailAddress(e.target.value)}
+                                        value={formValues.lastName}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </label>
@@ -57,8 +93,8 @@ export default function StepTwo() {
                                         id="email"
                                         type="email"
                                         placeholder="hello@example.com"
-                                    // value={emailAddress}
-                                    // onChange={(e) => setEmailAddress(e.target.value)}
+                                        value={formValues.email}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </label>
@@ -75,8 +111,8 @@ export default function StepTwo() {
                                         id="homeAddress"
                                         type="text"
                                         placeholder="Placeholder text..."
-                                    // value={emailAddress}
-                                    // onChange={(e) => setEmailAddress(e.target.value)}
+                                        value={formValues.homeAddress}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </label>
@@ -92,6 +128,7 @@ export default function StepTwo() {
                                     placeholder="select Country"
                                     bg=" bg-(--header-bg) "
                                     options={countryOptions}
+                                    value={formValues.country}
                                 />
                             </label>
 
@@ -101,11 +138,14 @@ export default function StepTwo() {
                                 <span className="font-medium text-sm text-[#262626] " >Gender</span>
 
                                 <CustomSelect
-                                    name="country"
+                                    name="gender"
                                     className="w-full"
                                     placeholder="select Gender"
                                     bg=" bg-(--header-bg) "
-                                    options={GenderOptionsData} />
+                                    options={GenderOptionsData}
+                                    value={formValues.gender}
+                                />
+
                             </label>
 
 
@@ -122,8 +162,8 @@ export default function StepTwo() {
                                         id="state"
                                         type="text"
                                         placeholder="Placeholder text..."
-                                    // value={emailAddress}
-                                    // onChange={(e) => setEmailAddress(e.target.value)}
+                                        value={formValues.state}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </label>
@@ -140,8 +180,8 @@ export default function StepTwo() {
                                         id="city"
                                         type="text"
                                         placeholder="Placeholder text..."
-                                    // value={emailAddress}
-                                    // onChange={(e) => setEmailAddress(e.target.value)}
+                                        value={formValues.city}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </label>
@@ -157,8 +197,8 @@ export default function StepTwo() {
                                         id="phoneNumber"
                                         type="tel"
                                         placeholder="(555) 000-0000"
-                                    // value={emailAddress}
-                                    // onChange={(e) => setEmailAddress(e.target.value)}
+                                        value={formValues.phoneNumber}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </label>
@@ -173,8 +213,21 @@ export default function StepTwo() {
                     <div className="w-full flex flex-col items-start gap-3.5  " >
                         <h4 className="text-base font-semibold text-(--text-dark-gray) " >Contact Information</h4>
 
-                        <div className=" w-full bg-(--bg-white-0) h-full rounded-3xl p-[26px] " >
-
+                        <div className=" w-full bg-(--bg-white-0) h-full rounded-3xl p-[26px] flex flex-col gap-[18px] " >
+                            {
+                                paymentOptions.map((option, index) => {
+                                    const isChecked = formValues.paymentOptions.toLowerCase() === option.heading.toLowerCase()
+                                    return (
+                                        <EventCheckBox
+                                            key={index}
+                                            checked={isChecked}
+                                            onCheckedChange={() => handleCheckboxChange("paymentOptions", true, option.heading.toLowerCase())}
+                                            options={option}
+                                            id={option.heading.trim().toLowerCase()}
+                                        />
+                                    )
+                                })
+                            }
                         </div>
                     </div>
                 </main>

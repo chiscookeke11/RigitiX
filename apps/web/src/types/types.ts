@@ -86,7 +86,37 @@ export interface TimelineItem {
 
 
 export interface CountryDataType {
-    label: string;
-    value: string;
-    iso: string
+  label: string;
+  value: string;
+  iso: string
+}
+
+
+
+
+export interface PaymentOptions {
+  heading: string;
+  description: string;
+  image: string;
+  color: string;
+}
+
+
+
+export interface EventPurchaseDetails {
+  firstName: string;
+  lastName: string;
+  email: string;
+  homeAddress: string;
+  country: string;
+  gender: string;
+  state: string;
+  city: string;
+  phoneNumber: string;
+  paymentOptions: string;
+  selectedTicketsAmount: {
+    regularTicketsAmount: number;
+    vipTicketsAmount: number;
+    vvipTicketsAmount: number;
+  }
 }
