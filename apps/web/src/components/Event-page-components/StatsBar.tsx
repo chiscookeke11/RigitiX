@@ -13,7 +13,7 @@ export default function StatsBar() {
                     <h3 className="text-sm font-medium text-(--text-secondary) " >Events</h3>
                     <span className="h-1 w-1 shrink-0 bg-(--gray-custom) rounded-full " />
                     <h3 className={`text-sm font-medium ${currentStep === 1 ? "text-(--orange-500)" : "text-(--text-secondary)"}`} > {event?.eventName} </h3>
-                    {currentStep === 2 && <>    <span className="h-1 w-1 shrink-0 bg-(--gray-custom) rounded-full " /> <h3 className="text-sm font-medium text-(--orange-500)" > Checkout </h3></>}
+                    {currentStep < 3 && currentStep > 1 && <>    <span className="h-1 w-1 shrink-0 bg-(--gray-custom) rounded-full " /> <h3 className="text-sm font-medium text-(--orange-500)" > Checkout </h3></>}
                 </div>
 
 

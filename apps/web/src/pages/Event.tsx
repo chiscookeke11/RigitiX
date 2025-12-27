@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, NavLink } from "react-router-dom";
 import { CustomAccordion } from "@/components/CustomAccordion";
 import { Button } from "@/components/Button";
 import { useEffect } from "react";
@@ -8,6 +8,9 @@ import { useEventStore } from "@/store/EventStore";
 import StatsBar from "@/components/Event-page-components/StatsBar";
 import ShareBtnBar from "@/components/Event-page-components/ShareButtonsBar";
 import SelectTickets from "@/components/Event-page-components/SelectTicket";
+import { AlertCircleIcon } from "hugeicons-react";
+import EventTicketReciept from "@/components/Event-page-components/EventTicketReceipt";
+
 
 
 
@@ -17,11 +20,12 @@ export const Page = () => {
 
     const {
         event,
-        selectedTicketAmount,
         currentStep,
         totalTickets,
         setEventById,
         setCurrentStep,
+        formValues,
+        setFormValues
     } = useEventStore();
 
 
@@ -33,6 +37,10 @@ export const Page = () => {
 
 
 
+    // Remove this and replace with auth check
+    const isLoggedIn = false
+
+
 
 
 
@@ -41,8 +49,11 @@ export const Page = () => {
 
 
     // The total price of selected ticket
-    const totalPrice = selectedTicketAmount.regular * (event?.price?.Regular.price ?? 0) + selectedTicketAmount.vip * (event?.price?.VIP.price ?? 0) + selectedTicketAmount.vvip * (event?.price?.VVIP.price ?? 0)
+    useEffect(() => {
+        const totalPrice = formValues.selectedTicketsAmount.regularTicketsAmount * (event?.price?.Regular.price ?? 0) + formValues.selectedTicketsAmount.vipTicketsAmount * (event?.price?.VIP.price ?? 0) + formValues.selectedTicketsAmount.vvipTicketsAmount * (event?.price?.VVIP.price ?? 0)
 
+        setFormValues("totalPrice", totalPrice)
+    }, [formValues.selectedTicketsAmount])
 
 
 
@@ -71,7 +82,7 @@ export const Page = () => {
         <div className=" bg-(--header-bg) w-full flex flex-col items-center gap-5 ">
 
             {/* The Stats bar  */}
-            <StatsBar />
+           {currentStep < 3 &&  <StatsBar />}
 
             <>
                 {/* The image section  */}
@@ -122,28 +133,54 @@ export const Page = () => {
                                 </div>
                             ) :
                                 (
-                                    <div className=" w-full flex flex-col p-4 rounded-3xl gap-4 items-start bg-(--bg-white-0) " >
+                                    currentStep <= 2 && (
+                                        <div className=" w-full flex flex-col p-4 rounded-3xl gap-4 items-start bg-(--bg-white-0) " >
 
-                                        {currentStep === 1 && (
-                                            <SelectTickets />
-                                        )}
+                                            {currentStep === 1 && (
+                                                <SelectTickets />
+                                            )}
 
 
-                                        <div className="w-full flex flex-col gap-6 border border-(--Gray-Light-100) p-4 " >
-                                            <p className="font-normal text-sm text-(--text-medium-gray) " >rigitiX platform fee is  <span className="font-medium" >$2</span></p>
+                                            <>
+                                                <div className="w-full flex flex-col gap-6 border border-(--Gray-Light-100) p-4 " >
+                                                    <p className="font-normal text-sm text-(--text-medium-gray) " >rigitiX platform fee is  <span className="font-medium" >$2</span></p>
 
-                                            <div className="w-full flex items-center justify-between " >
-                                                <h4 className="font-medium text-2xl text-(--text-medium-gray) " >Total</h4>
-                                                <h4 className="font-medium text-2xl text-(--text-dark-gray)  " > ${totalPrice} </h4>
-                                            </div>
+                                                    <div className="w-full flex items-center justify-between " >
+                                                        <h4 className="font-medium text-2xl text-(--text-medium-gray) " >Total</h4>
+                                                        <h4 className="font-medium text-2xl text-(--text-dark-gray)  " > ${formValues.totalPrice} </h4>
+                                                    </div>
 
-                                            <Button
-                                            onClick={() => setCurrentStep(currentStep + 1)}
-                                             variant="primary" className="w-full rounded-[20px] " >Check Out</Button>
+                                                    <Button
+                                                        onClick={() => setCurrentStep(currentStep + 1)}
+                                                        variant="primary"
+                                                        className="w-full rounded-[20px] shadow-[0px_11px_14.7px_0px_#AC55031A] " >
+                                                        {currentStep === 1 ? "Check Out" :
+                                                            currentStep === 2 ? "Confirm and Pay"
+                                                                : "Submit"
+                                                        }
+                                                    </Button>
+                                                </div>
+
+
+                                                {!isLoggedIn && (
+                                                    <div className="w-full p-3.5 bg-(--blue-notification-bg) flex items-start gap-3 rounded-[12px] " >
+                                                        <AlertCircleIcon fill="#335CFF" color="white" size={27} />
+
+                                                        <div className="w-full flex flex-col items-start gap-2.5  " >
+
+                                                            <h5 className="font-medium text-sm text-(--text-dark-gray) " >Almost there! Please Log in.</h5>
+                                                            <p className="font-normal text-sm text-(--text-dark-gray) " >Please log in to your account to secure your tickets.</p>
+
+                                                            <NavLink to={"/"} className={"underline text-sm font-medium text-(--text-dark-gray) mt-2 "} >Login to Purchase</NavLink>
+                                                        </div>
+
+                                                    </div>
+                                                )}
+                                            </>
+
+
                                         </div>
-
-
-                                    </div>
+                                    )
                                 )
                         }
 
@@ -163,6 +200,15 @@ export const Page = () => {
 
                 </div>
             </>
+
+
+            {
+                currentStep === 3 && (
+                    <EventTicketReciept />
+                )
+            }
+
+
         </div>
     );
 };

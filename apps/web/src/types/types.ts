@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import type { ReactNode } from "react";
 
 export interface EventsDataType {
   id: number,
@@ -60,7 +61,9 @@ export interface TestimonialCardTypes {
 
 export interface customSelectTypes {
   label: string;
-  value: string
+  value: string;
+  iso?: string;
+  countryName?: string;
 }
 
 
@@ -119,4 +122,22 @@ export interface EventPurchaseDetails {
     vipTicketsAmount: number;
     vvipTicketsAmount: number;
   }
+  totalPrice: number;
+  countryDialCode: string
+}
+
+
+
+export type DropdownOptionType = {
+  label: string | ReactNode;
+  value: string | number | boolean;
+  searchText?: string;
+  iso?: string;
+};
+
+export interface PaypalFormDetails{
+  cardNumber: string;
+  cardholderName: string;
+  expiryDate: Date | null;
+  csv: string
 }

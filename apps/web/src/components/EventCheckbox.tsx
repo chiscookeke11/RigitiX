@@ -2,7 +2,9 @@
 
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import { useEventStore } from "@/store/EventStore";
 import type { PaymentOptions } from "@/types/types";
+import PaypalForm from "./Event-page-components/PaypalForm";
 
 
 interface EventCheckBoxProps {
@@ -14,6 +16,7 @@ interface EventCheckBoxProps {
 }
 
 export function EventCheckBox({ options, id, checked, onCheckedChange, error }: EventCheckBoxProps) {
+
     return (
         <div className="flex flex-col gap-1 border border-(--Gray-Light-100) py-4 px-3.5 rounded-[10px] cursor-pointer ">
 
@@ -35,8 +38,21 @@ export function EventCheckBox({ options, id, checked, onCheckedChange, error }: 
                     checked={checked}
                     id={id}
                     onCheckedChange={onCheckedChange}
-                    className="border-[#EF8F57] data-[state=checked]:bg-[#EF8F57] data-[state=checked]:border-[#EF8F57] text-white cursor-pointer" />
+                    className="border-[#E1E4EA] shadow-xl data-[state=checked]:bg-[#EF8F57] data-[state=checked]:border-[#EF8F57] text-white cursor-pointer" />
             </Label>
+
+
+            {/* The form for Paypal payment method  */}
+           {checked && (
+  <>
+    {options.heading.trim().toLowerCase() === "paypal" && <PaypalForm />}
+
+    {options.heading.trim().toLowerCase() === "creditcard" && "Credit card"}
+
+    {options.heading.toLowerCase() === "cryptocurrency" && "Crypto"}
+  </>
+)}
+
             {error && <p className="text-red-500 text-xs md:text-sm  ">{error}</p>}
         </div>
     )

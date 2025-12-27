@@ -3,7 +3,13 @@ import { useEventStore } from "@/store/EventStore"
 
 
 export default function SelectTickets() {
-    const { addTicket, removeTicket, event, selectedTicketAmount, } = useEventStore()
+    const { addTicket, removeTicket, event, formValues } = useEventStore()
+
+//     setFormValues("selectedTicketsAmount", {
+//     regularTicketsAmount: selectedTicketAmount.regular,
+//     vipTicketsAmount: selectedTicketAmount.vip,
+//     vvipTicketsAmount: selectedTicketAmount.vvip,
+// });
 
 
 
@@ -24,7 +30,7 @@ export default function SelectTickets() {
                     <button
                         onClick={() => removeTicket("regular")}
                         className="w-8 h-8 rounded-[6px] bg-(--header-bg) flex items-center justify-center cursor-pointer text-(--gray-custom) "  >-</button>
-                    {selectedTicketAmount.regular}
+                    {formValues.selectedTicketsAmount.regularTicketsAmount}
                     <button
                         onClick={() => addTicket("regular")}
                         className="w-8 h-8 rounded-[6px] bg-(--orange-500) flex items-center justify-center cursor-pointer text-[#F9F6ED] ">+</button>
@@ -47,7 +53,7 @@ export default function SelectTickets() {
                     <button
                         onClick={() => removeTicket("vip")}
                         className="w-8 h-8 rounded-[6px] bg-(--header-bg) flex items-center justify-center cursor-pointer text-(--gray-custom) "  >-</button>
-                    {selectedTicketAmount.vip}
+                    {formValues.selectedTicketsAmount.vipTicketsAmount}
                     <button
                         onClick={() => addTicket("vip")}
                         className="w-8 h-8 rounded-[6px] bg-(--orange-500) flex items-center justify-center cursor-pointer text-[#F9F6ED] ">+</button>
@@ -72,7 +78,7 @@ export default function SelectTickets() {
                     <button
                         onClick={() => removeTicket("vvip")}
                         className="w-8 h-8 rounded-[6px] bg-(--header-bg) flex items-center justify-center cursor-pointer text-(--gray-custom) "  >-</button>
-                    {selectedTicketAmount.vvip}
+                    {formValues.selectedTicketsAmount.vvipTicketsAmount}
                     <button
                         onClick={() => addTicket("vvip")}
                         className="w-8 h-8 rounded-[6px] bg-(--orange-500) flex items-center justify-center cursor-pointer text-[#F9F6ED] ">+</button>

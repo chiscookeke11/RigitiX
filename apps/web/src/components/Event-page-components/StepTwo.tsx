@@ -1,20 +1,107 @@
-import { Home05Icon, Mail01Icon, UserIcon } from "hugeicons-react";
+import { Mail01Icon, MapsLocation01Icon, UserIcon } from "hugeicons-react";
 import { CustomSelect } from "../CustomSelect";
 import { countryOptions } from "@/data/country";
 import { GenderOptionsData } from "@/data/GenderOptions";
 import { paymentOptions } from "@/data/paymentInfoOptions";
 import { EventCheckBox } from "../EventCheckbox";
 import { useEventStore } from "@/store/EventStore";
-import type { EventPurchaseDetails } from "@/types/types";
 import type React from "react";
+import { State } from "country-state-city"
+import { useEffect, useState } from "react";
+import type { customSelectTypes, EventPurchaseDetails } from "@/types/types";
+import { City } from "country-state-city";
+import * as countryCodes from "country-codes-list";
+import { hasFlag } from "country-flag-icons";
+import { CountryDialCodeSelect } from "./CountryDialCodeSelect";
+
 
 
 
 export default function StepTwo() {
-
-
     const { formValues, setFormValues } = useEventStore()
+    const [stateOptions, setStateOptions] = useState<customSelectTypes[]>([])
+    const [cityOptions, setCityOptions] = useState<customSelectTypes[]>([])
+    const [countryDialCodes, setCountryDialCodes] = useState<customSelectTypes[]>([])
 
+
+
+
+    // country dial codes
+    useEffect(() => {
+        const dialCodes = countryCodes.customList(
+            "countryCode",
+            "{countryCallingCode}"
+        );
+
+        const options: customSelectTypes[] = Object.entries(dialCodes)
+            .filter(([code, dialCode,]) => dialCode && hasFlag(code))
+            .map(([code, dialCode]) => ({
+                label: `+${dialCode}`,
+                value: `+${dialCode}`,
+                iso: code,
+                countryName: countryOptions.find((country) => country.iso === code)?.label || code
+            }));
+
+        setCountryDialCodes(options);
+    }, []);
+
+
+
+
+
+
+
+
+    // function to select display state options based on the selected country
+    useEffect(() => {
+        if (!formValues.country) return;
+
+        const selectedCountry = countryOptions.find((country) => country.value === formValues.country);
+
+        if (selectedCountry && selectedCountry.iso) {
+            const fetchedStates = State.getStatesOfCountry(selectedCountry.iso)
+
+            const stateOptions = fetchedStates.map((state) => ({
+                label: state.name,
+                value: state.name,
+                iso: state.isoCode
+            }))
+
+            setStateOptions(stateOptions)
+        }
+
+    }, [formValues.country, setFormValues])
+
+
+    // function to get city based on the selected country
+    useEffect(() => {
+        if (!formValues.country) return;
+
+
+        const selectedCountry = countryOptions.find((country) => country.value === formValues.country);
+        const selectedState = stateOptions.find((state) => state.value === formValues.state)
+
+
+        if (selectedCountry && selectedCountry?.iso && selectedState?.iso) {
+            const fetchedCities = City.getCitiesOfState(selectedCountry.iso, selectedState?.iso)
+
+            const cityOptions = fetchedCities?.map((city) => ({
+                label: city.name,
+                value: city.name,
+            }))
+
+            setCityOptions(cityOptions ?? [])
+        }
+
+    }, [formValues.state, setFormValues, formValues.country])
+
+
+
+
+
+
+
+    // Checkbox change function
     const handleCheckboxChange = (
         name: keyof EventPurchaseDetails,
         checked: boolean,
@@ -30,15 +117,32 @@ export default function StepTwo() {
 
 
 
+
+
+    // Input change function
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+
+        if (name === "phoneNumber") {
+            if (isNaN(Number(value))) return
+        }
+
 
         setFormValues(name as keyof EventPurchaseDetails, value);
     };
 
 
 
-    console.log(formValues)
+
+
+    // select change function
+    const handleSelectChange = (name: keyof EventPurchaseDetails, value: string) => {
+        setFormValues(name, value);
+    };
+
+
+
+
 
 
     return (
@@ -49,14 +153,14 @@ export default function StepTwo() {
                         <h4 className="text-base font-semibold text-(--text-dark-gray) " >Contact Information</h4>
                         <div className=" w-full bg-(--bg-white-0) h-full rounded-3xl p-[26px] grid grid-cols-2 place-items-center justify-between justify-items-end gap-x-5 gap-y-6 " >
 
-                            <label htmlFor="firstname" className="w-full flex flex-col gap-1 items-start " >
+                            <label htmlFor="firstName" className="w-full flex flex-col gap-1 items-start " >
                                 <span className="font-medium text-sm text-[#262626] " >First Name</span>
                                 <div className=" flex gap-2 p-2 bg-[#FAFAFA] w-full text-[#A3A3A3] rounded-lg " >
                                     <UserIcon />
                                     <input
                                         className="w-full text-sm font-normal outline-none border-none focus:border-0 focus:outline-0 "
-                                        name="firstname"
-                                        id="firstname"
+                                        name="firstName"
+                                        id="firstName"
                                         type="text"
                                         placeholder="Placeholder text..."
                                         value={formValues.firstName}
@@ -66,14 +170,14 @@ export default function StepTwo() {
                             </label>
 
 
-                            <label htmlFor="lastname" className="w-full flex flex-col gap-1 items-start " >
+                            <label htmlFor="lastName" className="w-full flex flex-col gap-1 items-start " >
                                 <span className="font-medium text-sm text-[#262626] " >Last Name</span>
                                 <div className=" flex gap-2 p-2 bg-[#FAFAFA] w-full text-[#A3A3A3] rounded-lg " >
                                     <UserIcon />
                                     <input
                                         className="w-full text-sm font-normal outline-none border-none focus:border-0 focus:outline-0 "
-                                        name="lastname"
-                                        id="lastname"
+                                        name="lastName"
+                                        id="lastName"
                                         type="text"
                                         placeholder="Placeholder text..."
                                         value={formValues.lastName}
@@ -104,7 +208,7 @@ export default function StepTwo() {
                             <label htmlFor="homeAddress" className="w-full flex flex-col gap-1 items-start " >
                                 <span className="font-medium text-sm text-[#262626] " >Home Address</span>
                                 <div className=" flex gap-2 p-2 bg-[#FAFAFA] w-full text-[#A3A3A3] rounded-lg " >
-                                    <Home05Icon />
+                                    <MapsLocation01Icon />
                                     <input
                                         className="w-full text-sm font-normal outline-none border-none focus:border-0 focus:outline-0 "
                                         name="homeAddress"
@@ -119,16 +223,18 @@ export default function StepTwo() {
 
 
 
-                            <label htmlFor="homeAddress" className="w-full flex flex-col gap-1 items-start " >
+                            <label htmlFor="country" className="w-full flex flex-col gap-1 items-start " >
                                 <span className="font-medium text-sm text-[#262626] " >Country</span>
 
                                 <CustomSelect
                                     name="country"
                                     className="w-full"
-                                    placeholder="select Country"
+                                    placeholder="Select Country"
                                     bg=" bg-(--header-bg) "
+                                    isTypeable
                                     options={countryOptions}
                                     value={formValues.country}
+                                    onChange={(value: string) => handleSelectChange("country", value)}
                                 />
                             </label>
 
@@ -144,6 +250,7 @@ export default function StepTwo() {
                                     bg=" bg-(--header-bg) "
                                     options={GenderOptionsData}
                                     value={formValues.gender}
+                                    onChange={(value: string) => handleSelectChange("gender", value)}
                                 />
 
                             </label>
@@ -151,48 +258,74 @@ export default function StepTwo() {
 
 
 
+                            {formValues.country ?
+                                (<label htmlFor="state" className="w-full flex flex-col gap-1 items-start " >
+                                    <span className="font-medium text-sm text-[#262626] " >State</span>
 
-                            <label htmlFor="state" className="w-full flex flex-col gap-1 items-start " >
-                                <span className="font-medium text-sm text-[#262626] " >State</span>
-                                <div className=" flex gap-2 p-2 bg-[#FAFAFA] w-full text-[#A3A3A3] rounded-lg " >
-                                    <Home05Icon />
-                                    <input
-                                        className="w-full text-sm font-normal outline-none border-none focus:border-0 focus:outline-0 "
+                                    <CustomSelect
                                         name="state"
-                                        id="state"
-                                        type="text"
-                                        placeholder="Placeholder text..."
+                                        className="w-full"
+                                        placeholder="Select State"
+                                        bg=" bg-(--header-bg) "
+                                        isTypeable
+                                        options={stateOptions}
                                         value={formValues.state}
-                                        onChange={handleInputChange}
+                                        onChange={(value: string) => handleSelectChange("state", value)}
                                     />
-                                </div>
-                            </label>
+                                </label>) :
+                                <>
+                                    <div className="w-full flex flex-col gap-2 " >
+                                        <span className="font-medium text-sm text-[#262626] " >State</span>
+                                        <div className="w-full border rounded-lg px-4 py-2 text-gray-500 bg-gray-100 text-sm ">
+                                            Please select a country first
+                                        </div>
+                                    </div>
+                                </>
+                            }
 
 
 
-                            <label htmlFor="city" className="w-full flex flex-col gap-1 items-start " >
-                                <span className="font-medium text-sm text-[#262626] " >City</span>
-                                <div className=" flex gap-2 p-2 bg-[#FAFAFA] w-full text-[#A3A3A3] rounded-lg " >
-                                    <Home05Icon />
-                                    <input
-                                        className="w-full text-sm font-normal outline-none border-none focus:border-0 focus:outline-0 "
+
+                            {formValues.state ?
+                                (<label htmlFor="city" className="w-full flex flex-col gap-1 items-start " >
+                                    <span className="font-medium text-sm text-[#262626] " >City</span>
+
+                                    <CustomSelect
                                         name="city"
-                                        id="city"
-                                        type="text"
-                                        placeholder="Placeholder text..."
+                                        className="w-full"
+                                        placeholder="Select City"
+                                        bg=" bg-(--header-bg) "
+                                        options={cityOptions}
                                         value={formValues.city}
-                                        onChange={handleInputChange}
+                                        isTypeable={true}
+                                        onChange={(value: string) => handleSelectChange("city", value)}
                                     />
-                                </div>
-                            </label>
+                                </label>) :
+                                <>
+                                    <div className="w-full flex flex-col gap-2 " >
+                                        <span className="font-medium text-sm text-[#262626] " >City</span>
+                                        <div className="w-full border rounded-lg px-4 py-2 text-gray-500 bg-gray-100 text-sm ">
+                                            Please select a State first
+                                        </div>
+                                    </div>
+                                </>
+                            }
+
 
 
                             <label htmlFor="phoneNumber" className="w-full col-span-2 flex flex-col gap-1 items-start " >
                                 <span className="font-medium text-sm text-[#262626] " >Phone Number</span>
-                                <div className=" flex gap-2 p-2 bg-[#FAFAFA] w-full text-[#A3A3A3] rounded-lg " >
-                                    <Home05Icon />
+                                <div className=" flex  bg-[#FAFAFA] w-full text-[#A3A3A3] rounded-lg " >
+                                    <div className="border-r  border-(--Gray-Light-100) " >
+                                        <CountryDialCodeSelect
+                                            options={countryDialCodes}
+                                            value={formValues.countryDialCode}
+                                            onChange={(value) => handleSelectChange("countryDialCode", value)}
+                                        />
+
+                                    </div>
                                     <input
-                                        className="w-full text-sm font-normal outline-none border-none focus:border-0 focus:outline-0 "
+                                        className="w-full text-sm font-normal outline-none border-none focus:border-0 focus:outline-0 py-2 px-3 bg-(--header-bg)! "
                                         name="phoneNumber"
                                         id="phoneNumber"
                                         type="tel"
@@ -202,6 +335,7 @@ export default function StepTwo() {
                                     />
                                 </div>
                             </label>
+
                         </div>
 
                     </div>

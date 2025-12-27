@@ -23,7 +23,7 @@ export default function EventCard({ data, className }: EventCardProps) {
 
 
     return (
-        <Link to={`/event/${data.id}`} className="w-full" >
+
         <div className={`w-full max-w-[579px] bg-white rounded-[37px] py-6 px-[25px] flex flex-col items-start gap-[18px] shrink-0 ${className}  `} >
 
             <div className="w-full flex items-center justify-between" >
@@ -90,7 +90,7 @@ export default function EventCard({ data, className }: EventCardProps) {
 
 
 
-                <Button variant="primary" className="w-full max-w-[202px] rounded-3xl text-sm font-medium p-2 hover:bg-blue-800! duration-300 ease-in-out transition-all  custom-shadow " >Get Ticket</Button>
+                <Link to={`/event/${data.id}`} className="w-full max-w-[202px]" ><Button variant="primary" className="w-full  rounded-3xl text-sm font-medium p-2 hover:bg-blue-800! duration-300 ease-in-out transition-all  custom-shadow " >Get Ticket</Button></Link>
             </div>
 
 
@@ -111,6 +111,5 @@ export default function EventCard({ data, className }: EventCardProps) {
             </div>
 
         </div>
-        </Link>
     )
 }

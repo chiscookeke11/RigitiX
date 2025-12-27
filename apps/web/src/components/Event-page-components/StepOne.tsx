@@ -289,7 +289,7 @@ export default function StepOne() {
 
 
                 {/* The Comments  */}
-                <div className="bg-(--bg-white-0) rounded-3xl p-[26px] flex flex-col gap-8  " >
+            <div className="bg-(--bg-white-0) rounded-3xl p-[26px] flex flex-col gap-8  " >
                     <h4 className="text-base font-semibold text-(--text-dark-gray) " >Comments</h4>
 
                     <div className=" w-full flex items-center justify-center flex-col text-center gap-1 " >

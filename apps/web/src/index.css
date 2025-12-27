@@ -15,6 +15,7 @@
   --bg-white-0: #FFFFFF;
   --Gray-Light-100: #F5F5F5;
   --state-success-lighter: #E0FAEC;
+  --state-success-dark: #1FC16B;
   --state-feature-lighter: #EEE9F1;
   --state-verified-lighter: #EBF8FF;
   --text-primary: #124B68;
@@ -68,6 +69,7 @@
    --gray-custom: #D4D4D4;
    --text-purple: #522672;
    --green-background: #E4FBF8;
+   --blue-notification-bg:
 }
 
 body {
