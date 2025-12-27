@@ -17,7 +17,9 @@ export function Page() {
     { name: 'Payout Methods', path: '/dashboard/financials/payout-method' },
     { name: 'Transactions', path: '/dashboard/financials/transactions' },
     { name: 'Refunds', path: '/dashboard/financials/refunds' },
-    {name: 'Home', path: '/Home'}
+    { name: 'Home', path: '/Home' },
+    { name: 'About', path: '/About' },
+    { name: 'Events', path: '/Events' }
   ];
 
   return (

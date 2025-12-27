@@ -26,10 +26,10 @@ const TestimonialCard = ({ data }: TestimonialCardProps) => {
 
 export default function Testimonials() {
     return (
-        <section className="w-full flex flex-col items-start gap-6 cursor-grab " >
+        <section className="w-full flex flex-col items-start gap-6 cursor-grab py-12 " >
             <div className="flex gap-2 items-start flex-col" >
                 <h3 className="font-semibold text-[32px] text-[#262626] " >Why Event Organizers Choose rigitiX</h3>
-                <p className="text-[#737373] font-normal text-lg " >Discover, book and manage tickets for top events seamlessly</p>
+                <p className="text-[#737373] font-medium text-lg " >Discover, book and manage tickets for top events seamlessly</p>
             </div>
 
 
@@ -49,6 +49,9 @@ export default function Testimonials() {
                     },
                     1024: {
                         slidesPerView: 3,
+                    },
+                    1280: {
+                        slidesPerView: 4,
                     },
                 }}
                 spaceBetween={20}

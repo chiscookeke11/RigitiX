@@ -1,22 +1,143 @@
+import type { LucideIcon } from "lucide-react";
+import type { ReactNode } from "react";
 
-export interface FeaturedEventsDataType {
-    hostName: string,
-    hostImage: string,
-    eventName: string,
-    eventDescription: string,
-    eventTime: Date,
-    eventLocation: string,
-    timeCreated: Date,
-    eventImage: string,
-    tags: string[],
-    number_of_likes: number,
-    number_of_comments: number,
-    status: "Free" | "Paid"
+export interface EventsDataType {
+  id: number,
+  hostName: string,
+  hostImage: string,
+  eventName: string,
+  eventDescription: string,
+  eventTime: Date,
+  eventLocation: string,
+  town: string,
+  state: string,
+  country: string,
+  timeCreated: Date,
+  eventImage: string,
+  category: string,
+  number_of_likes: number,
+  number_of_comments: number,
+  xUrl: string,
+  linkedInUrl: string,
+  facebookUrl: string,
+  status: "Free" | "Paid",
+  tags?: string[],
+  galleryImages?: string[],
+  sponsors?: {
+    color: string;
+    image: string;
+  }[],
+  speakers?: {
+    name: string;
+    image: string;
+    profession: string;
+    linkedInUrl: string;
+    instaUrl: string;
+    xUrl: string
+  }[],
+  price?: {
+    Regular: {
+      price: number,
+      amountLeft: number,
+    },
+    VIP: {
+      price: number,
+      amountLeft: number,
+    },
+    VVIP: {
+      price: number,
+      amountLeft: number,
+    },
+  }
 }
 
 
 export interface TestimonialCardTypes {
-    image: string;
-    name: string;
-    testimony: string;
+  image: string;
+  name: string;
+  testimony: string;
+}
+
+
+export interface customSelectTypes {
+  label: string;
+  value: string;
+  iso?: string;
+  countryName?: string;
+}
+
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  image: string;
+}
+
+
+
+
+
+export interface TimelineItem {
+  year: string;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  type: string;
+}
+
+
+
+export interface CountryDataType {
+  label: string;
+  value: string;
+  iso: string
+}
+
+
+
+
+export interface PaymentOptions {
+  heading: string;
+  description: string;
+  image: string;
+  color: string;
+}
+
+
+
+export interface EventPurchaseDetails {
+  firstName: string;
+  lastName: string;
+  email: string;
+  homeAddress: string;
+  country: string;
+  gender: string;
+  state: string;
+  city: string;
+  phoneNumber: string;
+  paymentOptions: string;
+  selectedTicketsAmount: {
+    regularTicketsAmount: number;
+    vipTicketsAmount: number;
+    vvipTicketsAmount: number;
+  }
+  totalPrice: number;
+  countryDialCode: string
+}
+
+
+
+export type DropdownOptionType = {
+  label: string | ReactNode;
+  value: string | number | boolean;
+  searchText?: string;
+  iso?: string;
+};
+
+export interface PaypalFormDetails{
+  cardNumber: string;
+  cardholderName: string;
+  expiryDate: Date | null;
+  csv: string
 }

@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { navLinksData } from "../data/navlinksData"
+import { Button } from "./Button";
 
 
 
@@ -8,9 +9,9 @@ export default function Navbar() {
     return (
         <header className="w-11/12 mx-auto py-6   flex items-center justify-between gap-10">
             {/* The logo */}
-            <Link to="/home">
-                Logo here
-            </Link>
+            <NavLink to="#" className="w-[129px] h-6 flex items-center justify-center " >
+                <img src="/images/Company_logos/rigitiX_logo.png" alt="logo" />
+            </NavLink>
 
             {/* nav links  */}
             <ul className="w-fit flex items-center gap-8 " >
@@ -23,7 +24,7 @@ export default function Navbar() {
 
 
 
-            button here
+            <Button variant="primary" className="w-fit rounded-3xl text-sm font-medium p-2 hover:bg-blue-800! duration-300 ease-in-out transition-all  custom-shadow " >Get Started</Button>
         </header>
     );
 }
