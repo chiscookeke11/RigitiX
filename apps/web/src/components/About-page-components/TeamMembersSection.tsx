@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import 'swiper/css/scrollbar';
+// import 'swiper/css/scrollbar';
 import 'swiper/css/pagination';
 import { Autoplay, Scrollbar } from 'swiper/modules';
 import Teamcard from './TeamCard';

@@ -2,7 +2,6 @@
 
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { useEventStore } from "@/store/EventStore";
 import type { PaymentOptions } from "@/types/types";
 import PaypalForm from "./Event-page-components/PaypalForm";
 
